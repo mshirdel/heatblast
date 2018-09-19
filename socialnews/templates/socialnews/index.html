@@ -1,0 +1,9 @@
+{% extends 'socialnews/base.html'%}
+{% load static %}
+{% block content %}
+<div>
+    {% for item in items %}
+    <a href="{{item.url}}">{{item.title}}</a> <br>
+    {% endfor %}
+</div>
+{% endblock %}

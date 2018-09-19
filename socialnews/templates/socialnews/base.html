@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Meysam Shirdel">
+
+    <title>{% block title%}{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'socialnews/styles/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="{% static 'socialnews/styles/fontawesom/font-awesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
+        type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'socialnews/styles/bootstrap-rtl.css' %}" rel="stylesheet">
+    <link href="{% static 'socialnews/styles/fonts.css' %}" rel="stylesheet">
+    <link href="{% static 'socialnews/styles/general.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+    {% include "socialnews/navigation.html" %}
+    <div class="container">
+        {% block content %} {% endblock %}
+    </div>
+    {% include "socialnews/footer.html" %}
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'socialnews/javascripts/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'socialnews/javascripts/bootstrap/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+
+</html>
