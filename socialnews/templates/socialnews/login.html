@@ -1,0 +1,31 @@
+{% extends "socialnews/base.html" %}
+
+{% block content %}
+{% if errors %}
+<p class="alert alert-danger" role="alert">کلمه عبور یا نام کاربری اشتباه است. دوباره سعی کنید.</p>
+{% endif %}
+{% if next %}
+{% if user.is_authenticated %}
+<p class="alert alert-danger" role="alert">Your account doesn't have access to this page. To proceed, please login with
+    an account that has access.</p>
+{% else %}
+<p class="alert alert-danger" role="alert">Please login to see this page.</p>
+{% endif %}
+{% endif %}
+<div class="row justify-content-md-center">
+    <div class="col-md-5">
+        <form class="form-signin" method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="from-group">
+                <label for="id_username">نام کاربری:</label>
+                <input type="text" name="username" autofocus required id="id_username" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="id_password">کلمه عبور:</label>
+                <input type="password" name="password" required id="id_password" class="form-control">
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">ورود</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

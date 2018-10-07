@@ -12,7 +12,7 @@
     <title>{% block title%}{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'socialnews/styles/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'socialnews/styles/bootstrap/bootstrap.css' %}" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
     <link href="{% static 'socialnews/styles/fontawesom/font-awesome.css' %}" rel="stylesheet" type="text/css">
@@ -28,10 +28,10 @@
 
 <body>
     {% include "socialnews/navigation.html" %}
-    <div class="container">
+    <div class="container container-padding-top">
         {% block content %} {% endblock %}
     </div>
-    {% include "socialnews/footer.html" %}
+    <!-- {% include "socialnews/footer.html" %} -->
     <!-- Bootstrap core JavaScript -->
     <script src="{% static 'socialnews/javascripts/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'socialnews/javascripts/bootstrap/bootstrap.bundle.min.js' %}"></script>

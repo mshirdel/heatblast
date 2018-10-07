@@ -1,9 +1,15 @@
 {% extends 'socialnews/base.html'%}
 {% load static %}
+{% load jformat %}
 {% block content %}
-<div>
+
     {% for item in items %}
-    <a href="{{item.url}}">{{item.title}}</a> <br>
+    <div class="row padding-top-10">
+        <div class="col-md-10">
+            <a href="{{item.url}}" target="_blank">{{item.title}}</a>
+        </div>
+    </div>
     {% endfor %}
-</div>
 {% endblock %}
+
+<!-- - {{ item.created|jformat:"%A %d %B %Y %H:%M"}}-->
