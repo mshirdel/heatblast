@@ -1,18 +1,18 @@
 from django import forms
-from .models import Item
+from .models import Story
 
 
 class StoryForm(forms.ModelForm):
     class Meta:
-        model = Item
-        fields = ['title', 'url', 'item_body_text']
+        model = Story
+        fields = ['title', 'url', 'story_body_text']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'url': forms.URLInput(attrs={'class': 'form-control'}),
-            'item_body_text': forms.Textarea(attrs={'class': 'form-control'})
+            'story_body_text': forms.Textarea(attrs={'class': 'form-control'})
         }
         labels = {
             'title': 'عنوان',
             'url': 'آدرس لینک',
-            'item_body_text': 'متن برای گفتگو'
+            'story_body_text': 'متن برای گفتگو'
         }
