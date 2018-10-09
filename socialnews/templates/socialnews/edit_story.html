@@ -1,0 +1,11 @@
+{% extends 'socialnews/base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-10">
+            <form action="{% url 'edit_story' id %}" method="POST">
+                {% include 'socialnews/item_form.html' with form=form %}
+                <button type="submit" class="btn btn-primary mt-2">ویرایش</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
