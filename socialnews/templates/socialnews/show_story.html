@@ -22,4 +22,21 @@
             <p>{{story.story_body_text}}</p>
         </div>
     </div>
+    <div class="row padding-top-10">
+        <div class="col-md-12">
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit" class="btn btn-primary mt-2">ارسال</button>
+            </form>
+        </div>
+    </div>
+    <div class="row padding-top-10">
+            <div class="col-md-12">
+                {% for comment in story.storycomment_set.all %}
+                    <i><b>{{ comment.created|jformat:"%A %d %B %Y %H:%M" }} - {{ comment.commenter.username }}</b></i>
+                    <p>{{ comment.story_comment }}</p>
+                {% endfor %}
+            </div>
+        </div>
 {% endblock %}

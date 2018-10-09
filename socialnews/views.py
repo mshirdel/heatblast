@@ -2,19 +2,31 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 
-from .models import Story
-from .forms import StoryForm
+from .models import Story, StoryComment
+from .forms import StoryForm, StoryCommentForm
 
 
 class Stories(View):
     def get(self, request):
-        return render(request, 'socialnews/index.html', {'items': Story.objects.all()})
+        return render(request, 'socialnews/index.html', {'items': Story.objects.order_by('-created')})
 
 
 class ShowStory(View):
     def get(self, request, id):
         story = Story.objects.get(pk=id)
-        return render(request, 'socialnews/show_story.html', {'story': story})
+        story_comment_form = StoryCommentForm()
+        return render(request, 'socialnews/show_story.html', {'story': story, 'form': story_comment_form})
+
+    def post(self, request, id):
+        story = Story.objects.get(pk=id)
+        form = StoryCommentForm(request.POST)
+        if form.is_valid():
+            comment = StoryComment(commenter=request.user, story=story,
+                                   story_comment=form.cleaned_data['story_comment'])
+            comment.save()
+            return HttpResponseRedirect('/')
+        else:
+            return render(request, 'socialnews/show_story.html', {'story': story, 'form': form})
 
 
 class NewStory(View):
