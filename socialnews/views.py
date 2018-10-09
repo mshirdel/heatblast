@@ -11,6 +11,12 @@ class Stories(View):
         return render(request, 'socialnews/index.html', {'items': Story.objects.all()})
 
 
+class ShowStory(View):
+    def get(self, request, id):
+        story = Story.objects.get(pk=id)
+        return render(request, 'socialnews/show_story.html', {'story': story})
+
+
 class NewStory(View):
     def get(self, request):
         form = StoryForm()
@@ -20,10 +26,10 @@ class NewStory(View):
         form = StoryForm(request.POST)
         if form.is_valid():
             story = Story(title=form.cleaned_data['title'],
-                        url=form.cleaned_data['url'],
-                        story_body_text=form.cleaned_data['story_body_text'],
-                        user=request.user
-                        )
+                          url=form.cleaned_data['url'],
+                          story_body_text=form.cleaned_data['story_body_text'],
+                          user=request.user
+                          )
             story.save()
             return HttpResponseRedirect('/')
         else:
@@ -49,6 +55,7 @@ class EditStory(View):
 class PanelView(View):
     def get(self, request):
         return render(request, 'socialnews/panel.html')
+
 
 class ProfileView(View):
     def get(self, request):

@@ -6,10 +6,26 @@
     {% for item in items %}
     <div class="row padding-top-10">
         <div class="col-md-10">
-            <a href="{{item.url}}" target="_blank">{{item.title}}</a>
-            {% if user.is_authenticated %}
-            | <a href="{% url 'edit_story' item.id %}">ویرایش</a>
-            {% endif %}
+            <div class="row">
+                <div class="col-md-12">
+                    {% if item.url %}
+                        <a href="{{item.url}}" target="_blank">{{item.title}}</a>
+                    {% else %}
+                        <a href="{% url 'show_story' item.id %}">{{item.title}}</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row font-size-10">
+                <div class="col-md-12">
+                    ایجاد شده توسط:
+                    {{ item.user.username }}
+                    در {{ item.created|jformat:"%A %d %B %Y %H:%M"}}
+                    {% if user.is_authenticated and item.user == uesr %}
+                        | <a href="{% url 'edit_story' item.id %}">ویرایش</a>
+                    {% endif %}
+                    | <a href="{% url 'show_story' item.id %}">گفتگو</a>
+                </div>
+            </div>
         </div>
     </div>
     {% endfor %}
