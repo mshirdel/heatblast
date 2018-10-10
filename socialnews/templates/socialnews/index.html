@@ -29,7 +29,7 @@
                     {% if user.is_authenticated and story.user == user %}
                         | <a href="{% url 'edit_story' story.id %}">ویرایش</a>
                     {% endif %}
-                    | <a href="{% url 'show_story' story.id %}">گفتگو</a>
+                    | <a href="{% url 'show_story' story.id %}">گفتگو ({{ story.storycomment_set.count }})</a>
                     {% if story.id in voted_story_id %}
                         | 
                         <a href="{% url 'downvote_story' story.id %}">
