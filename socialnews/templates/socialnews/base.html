@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="rtl">
 
 <head>
 
@@ -11,18 +11,10 @@
 
     <title>{% block title%}{% endblock %}</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'socialnews/styles/bootstrap/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'socialnews/css/bootstrap.css' %}" rel="stylesheet">
 
-    <!-- Custom fonts for this template -->
-    <link href="{% static 'socialnews/styles/fontawesom/font-awesome.css' %}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
-        type="text/css">
-
-    <!-- Custom styles for this template -->
-    <link href="{% static 'socialnews/styles/bootstrap-rtl.css' %}" rel="stylesheet">
-    <link href="{% static 'socialnews/styles/fonts.css' %}" rel="stylesheet">
-    <link href="{% static 'socialnews/styles/general.css' %}" rel="stylesheet">
+    <link href="{% static 'socialnews/css/fonts.css' %}" rel="stylesheet">
+    <link href="{% static 'socialnews/css/general.css' %}" rel="stylesheet">
 
 </head>
 
@@ -32,9 +24,10 @@
         {% block content %} {% endblock %}
     </div>
     <!-- {% include "socialnews/footer.html" %} -->
-    <!-- Bootstrap core JavaScript -->
-    <script src="{% static 'socialnews/javascripts/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'socialnews/javascripts/bootstrap/bootstrap.bundle.min.js' %}"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'socialnews/js/jquery-3.2.1.slim.min.js' %}"></script>
+    <script src="{% static 'socialnews/js/popper.min.js' %}"></script>
+    <script src="{% static 'socialnews/js/bootstrap.js' %}"></script>
 
 </body>
 

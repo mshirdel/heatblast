@@ -1,8 +1,7 @@
 @import url(fonts.css);
 body {
-    padding-top: 54px;
+    /* padding-top: 54px; */
     font-size: 14px;
-    font-family: "iran-sans";
 }
 
 h1 {

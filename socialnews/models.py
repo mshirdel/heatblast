@@ -33,3 +33,8 @@ class StoryComment(TimeStampedModel):
 
     def __str__(self):
         return self.story_comment[:100]
+
+
+class StoryPoint(TimeStampedModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    story = models.ForeignKey(Story, on_delete=models.CASCADE)

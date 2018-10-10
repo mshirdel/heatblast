@@ -3,28 +3,29 @@
 {% load jformat %}
 {% block content %}
 
-    {% for item in items %}
+    {% for story in stories %}
     <div class="row padding-top-10">
         <div class="col-md-10">
             <div class="row">
                 <div class="col-md-12">
-                    <a href=""><i class='fa fa-thumbs-o-up'></i></a>
-                    {% if item.url %}
-                        <a href="{{item.url}}" target="_blank">{{item.title}}</a>
+                    <a href="{% url 'upvote_story' story.id %}"><i class='fa fa-thumbs-o-up'></i></a>
+                    {% if story.url %}
+                        <a href="{{story.url}}" target="_blank">{{story.title}}</a>
                     {% else %}
-                        <a href="{% url 'show_story' item.id %}">{{item.title}}</a>
+                        <a href="{% url 'show_story' story.id %}">{{story.title}}</a>
                     {% endif %}
                 </div>
             </div>
             <div class="row font-size-10">
                 <div class="col-md-12">
-                    ایجاد شده توسط:
-                    {{ item.user.username }}
-                    در {{ item.created|jformat:"%A %d %B %Y %H:%M"}}
-                    {% if user.is_authenticated and item.user == uesr %}
-                        | <a href="{% url 'edit_story' item.id %}">ویرایش</a>
+                    امتیاز : {{ story.storypoint_set.count }}
+                    | ایجاد شده توسط:
+                    {{ story.user.username }}
+                    در {{ story.created|jformat:"%A %d %B %Y %H:%M"}}
+                    {% if user.is_authenticated and story.user == uesr %}
+                        | <a href="{% url 'edit_story' story.id %}">ویرایش</a>
                     {% endif %}
-                    | <a href="{% url 'show_story' item.id %}">گفتگو</a>
+                    | <a href="{% url 'show_story' story.id %}">گفتگو</a>
                 </div>
             </div>
         </div>
@@ -32,4 +33,4 @@
     {% endfor %}
 {% endblock %}
 
-<!-- - {{ item.created|jformat:"%A %d %B %Y %H:%M"}}-->
+<!-- - {{ story.created|jformat:"%A %d %B %Y %H:%M"}}-->
