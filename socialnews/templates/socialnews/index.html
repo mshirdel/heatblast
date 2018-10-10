@@ -8,7 +8,11 @@
         <div class="col-md-10">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="{% url 'upvote_story' story.id %}"><i class='fa fa-thumbs-o-up'></i></a>
+                    <a href="{% url 'upvote_story' story.id %}">
+                        <span style="color: #28a745">
+                            <i class="fas fa-thumbs-up"></i>
+                        </span>
+                    </a>
                     {% if story.url %}
                         <a href="{{story.url}}" target="_blank">{{story.title}}</a>
                     {% else %}
@@ -21,11 +25,19 @@
                     امتیاز : {{ story.storypoint_set.count }}
                     | ایجاد شده توسط:
                     {{ story.user.username }}
-                    در {{ story.created|jformat:"%A %d %B %Y %H:%M"}}
-                    {% if user.is_authenticated and story.user == uesr %}
+                    در {{ story.created|jformat:"%H:%M %Y/%m/%d"}}
+                    {% if user.is_authenticated and story.user == user %}
                         | <a href="{% url 'edit_story' story.id %}">ویرایش</a>
                     {% endif %}
                     | <a href="{% url 'show_story' story.id %}">گفتگو</a>
+                    {% if story.id in voted_story_id %}
+                        | 
+                        <a href="{% url 'downvote_story' story.id %}">
+                            <span style="color: tomato">
+                                <i class="fas fa-thumbs-down"></i>
+                            </span>
+                        </a> 
+                    {% endif %}
                 </div>
             </div>
         </div>

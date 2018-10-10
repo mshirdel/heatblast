@@ -8,7 +8,13 @@ from .forms import StoryForm, StoryCommentForm
 
 class Stories(View):
     def get(self, request):
-        return render(request, 'socialnews/index.html', {'stories': Story.objects.order_by('-created')})
+        voted_story_id = []
+        for point in request.user.storypoint_set.all():
+            voted_story_id.append(point.story_id)
+        return render(request, 'socialnews/index.html', {
+            'stories': Story.objects.order_by('-created'),
+            'voted_story_id': voted_story_id
+        })
 
 
 class ShowStory(View):
@@ -66,21 +72,23 @@ class EditStory(View):
 
 def upvote_story(request, id):
     story = get_object_or_404(Story, pk=id)
-    story_point = get_object_or_404(StoryPoint, user=request.user, story=story)
-    if (story_point):
+    try:
+        story_point = StoryPoint.objects.get(user=request.user, story=story)
         return HttpResponseRedirect('/')
-    story_point = StoryPoint(user=request.user, story=story)
-    story_point.save()
-    return HttpResponseRedirect('/')
+    except StoryPoint.DoesNotExist:
+        story_point = StoryPoint(user=request.user, story=story)
+        story_point.save()
+        return HttpResponseRedirect('/')
 
 
 def downvote_stroy(request, id):
     story = get_object_or_404(Story, pk=id)
-    story_point = get_object_or_404(StoryPoint, story=story, user=request.user)
-    if story_point:
+    try:
+        story_point = StoryPoint.objects.get(user=request.user, story=story)
         story_point.delete()
-    else:
-        return HttpResponseRedirect('/')
+    except StoryPoint.DoesNotExist:
+        pass
+    return HttpResponseRedirect('/')
 
 
 class PanelView(View):
