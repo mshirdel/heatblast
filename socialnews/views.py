@@ -1,19 +1,24 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.utils.translation import gettext as _
 
 from .models import Story, StoryComment, StoryPoint
-from .forms import StoryForm, StoryCommentForm
+from .forms import StoryForm, StoryCommentForm, RegisterUserForm
 
 
 class Stories(View):
     def get(self, request):
         voted_story_id = []
-        for point in request.user.storypoint_set.all():
-            voted_story_id.append(point.story_id)
+        if request.user.is_authenticated:
+            for point in request.user.storypoint_set.all():
+                voted_story_id.append(point.story_id)
         return render(request, 'socialnews/index.html', {
             'stories': Story.objects.order_by('-created'),
-            'voted_story_id': voted_story_id
+            'voted_story_id': voted_story_id,
+            'test_data': _('Salam')
         })
 
 
@@ -70,6 +75,7 @@ class EditStory(View):
             return render(request, 'socialnews/edit_story.html', {'form': form, 'id': id})
 
 
+@login_required()
 def upvote_story(request, id):
     story = get_object_or_404(Story, pk=id)
     try:
@@ -79,6 +85,9 @@ def upvote_story(request, id):
         story_point = StoryPoint(user=request.user, story=story)
         story_point.save()
         return HttpResponseRedirect('/')
+
+
+login_required()
 
 
 def downvote_stroy(request, id):
@@ -99,3 +108,29 @@ class PanelView(View):
 class ProfileView(View):
     def get(self, request):
         return render(request, 'socialnews/profile.html')
+
+
+class RegisterUserView(View):
+    def get(self, request):
+        form = RegisterUserForm()
+        return render(request, 'socialnews/register_user.html', {'form': form})
+
+    def post(self, request):
+        errors = []
+        form = RegisterUserForm(request.POST)
+        if form.is_valid():
+            if form.cleaned_data['password'] == form.cleaned_data['re_password']:
+                if get_object_or_404(User, username=form.cleaned_data['username']):
+                    errors.append('این نام کاربری قبلا استفاده شده است.')
+                    return render(request, 'socialnews/register_user.html', {'form': form, 'errors': errors})
+                else:
+                    new_user = User.objects.create_user(
+                        form.cleaned_data['username'],
+                        password=form.cleaned_data['password'])
+                    new_user.save()
+            else:
+                errors.append('کلمه عبور و تکرار کلمه با هم برابر نیست.')
+                return render(request, 'socialnews/register_user.html', {'form': form, 'errors': errors})
+            return HttpResponseRedirect('/')
+        else:
+            return render(request, 'socialnews/register_user.html', {'form': form, 'errors': form.errors})

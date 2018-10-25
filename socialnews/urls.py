@@ -1,13 +1,14 @@
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from .views import Stories, PanelView, NewStory, EditStory, ProfileView, ShowStory, upvote_story, downvote_stroy
+from .views import Stories, PanelView, NewStory, EditStory, ProfileView, ShowStory, upvote_story, downvote_stroy, RegisterUserView
 
 
 urlpatterns = [
-    path('accounts/login',
+    path('accounts/login/',
          auth_views.LoginView.as_view(template_name='socialnews/login.html'), name='login'),
-    path('accounts/logout', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
+    path('accounts/logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
     path('accounts/profile/', ProfileView.as_view(), name='profile'),
+    path('accounts/register/', RegisterUserView.as_view(), name='register_user'),
     path('', Stories.as_view(), name='index'),
     path('story/<int:id>', ShowStory.as_view(), name='show_story'),
     path('story/<int:id>/upvote', upvote_story, name='upvote_story'),

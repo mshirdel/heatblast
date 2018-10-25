@@ -23,8 +23,17 @@ class StoryCommentForm(forms.ModelForm):
         model = StoryComment
         fields = ['story_comment']
         widgets = {
-            'story_comment' : forms.Textarea(attrs={'class': 'form-control'})
+            'story_comment': forms.Textarea(attrs={'class': 'form-control'})
         }
         labels = {
-            'story_comment': 'دیدگاه شما چیست؟'
+            'story_comment': 'دیدگاه شما چیست'
         }
+
+
+class RegisterUserForm(forms.Form):
+    username = forms.CharField(help_text='نام کاربری دلخواه', strip=True,
+                               label='نام کاربری', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(min_length=6,
+                               label='کلمه عبور', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    re_password = forms.CharField(min_length=6, label='تکرار کلمه عبور', widget=forms.PasswordInput(
+        attrs={'class': 'form-control'}))

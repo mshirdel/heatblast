@@ -2,10 +2,10 @@
 {% load static %}
 {% load jformat %}
 {% block content %}
-
+    <h1>{{ test_data }}</h1>
     {% for story in stories %}
-    <div class="row padding-top-10">
-        <div class="col-md-10">
+    <div class="row justify-content-md-center padding-top-10">
+        <div class="col-md-6">
             <div class="row">
                 <div class="col-md-12">
                     <a href="{% url 'upvote_story' story.id %}">
@@ -20,7 +20,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="row font-size-10">
+            <div class="row font-size-12">
                 <div class="col-md-12">
                     امتیاز : {{ story.storypoint_set.count }}
                     | ایجاد شده توسط:
@@ -28,8 +28,11 @@
                     در {{ story.created|jformat:"%H:%M %Y/%m/%d"}}
                     {% if user.is_authenticated and story.user == user %}
                         | <a href="{% url 'edit_story' story.id %}">ویرایش</a>
-                    {% endif %}
-                    | <a href="{% url 'show_story' story.id %}">گفتگو ({{ story.storycomment_set.count }})</a>
+                    {% endif %} 
+                    
+                    | <a href="{% url 'show_story' story.id %}">گفتگو 
+                        [{{ story.storycomment_set.count }}]
+                    </a>
                     {% if story.id in voted_story_id %}
                         | 
                         <a href="{% url 'downvote_story' story.id %}">
