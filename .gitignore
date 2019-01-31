@@ -95,3 +95,4 @@ hesabketab/__pycache__/
 hesabketab/__pycache__/*.pyc
 *.csv
 .vscode/
+.idea/

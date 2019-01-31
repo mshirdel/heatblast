@@ -30,7 +30,7 @@
                     {% endif %} 
                     
                     | <a href="{% url 'show_story' story.id %}">گفتگو 
-                        [{{ story.storycomment_set.count }}]
+                        [{{ story.number_of_comments }}]
                     </a>
                     {% if story.id in voted_story_id %}
                         | 

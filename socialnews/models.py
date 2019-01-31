@@ -19,9 +19,17 @@ class Story(TimeStampedModel):
     story_body_text = models.TextField(blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     deleted = models.BooleanField(default=False)
+    number_of_comments = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ['-created']
+
+    def update_number_of_comments(self):
+        self.number_of_comments = self.storycomment_set.count()
+        self.save()
 
 
 class StoryComment(TimeStampedModel):
@@ -33,6 +41,14 @@ class StoryComment(TimeStampedModel):
 
     def __str__(self):
         return self.story_comment[:100]
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs) # Call the real save() method
+        self.story.update_number_of_comments()
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+        self.story.update_number_of_comments()
 
 
 class StoryPoint(TimeStampedModel):

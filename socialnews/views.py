@@ -16,7 +16,7 @@ class Stories(View):
             for point in request.user.storypoint_set.all():
                 voted_story_id.append(point.story_id)
         return render(request, 'socialnews/index.html', {
-            'stories': Story.objects.order_by('-created'),
+            'stories': Story.objects.all(),
             'voted_story_id': voted_story_id
         })
 
