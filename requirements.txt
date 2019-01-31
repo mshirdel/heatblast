@@ -3,6 +3,7 @@ autopep8==1.4
 backcall==0.1.0
 decorator==4.3.2
 Django==2.1.5
+django-debug-toolbar==1.11
 django-extensions==2.1.4
 django-jalali==3.1.0
 ipython==7.2.0
@@ -25,7 +26,9 @@ pylint==2.1.1
 pytz==2018.5
 rope==0.11.0
 six==1.11.0
+sqlparse==0.2.4
 traitlets==4.3.2
 typed-ast==1.1.0
 wcwidth==0.1.7
+Werkzeug==0.14.1
 wrapt==1.10.11
