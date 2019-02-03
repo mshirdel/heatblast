@@ -25,7 +25,7 @@ class ShowStory(View):
     def get(self, request, id):
         story = get_object_or_404(Story, pk=id)
         story_comment_form = StoryCommentForm()
-        return render(request, 'socialnews/show_story.html', {'story': story, 'form': story_comment_form})
+        return render(request, 'socialnews/story/show.html', {'story': story, 'form': story_comment_form})
 
     def post(self, request, id):
         story = Story.objects.get(pk=id)
@@ -36,13 +36,13 @@ class ShowStory(View):
             comment.save()
             return HttpResponseRedirect('/')
         else:
-            return render(request, 'socialnews/show_story.html', {'story': story, 'form': form})
+            return render(request, 'socialnews/story/show.html', {'story': story, 'form': form})
 
 
 class NewStory(View):
     def get(self, request):
         form = StoryForm()
-        return render(request, 'socialnews/new_story.html', {'form': form})
+        return render(request, 'socialnews/story/new.html', {'form': form})
 
     def post(self, request):
         form = StoryForm(request.POST)
@@ -55,14 +55,14 @@ class NewStory(View):
             story.save()
             return HttpResponseRedirect('/')
         else:
-            return render(request, 'socialnews/new_story.html', {'form': form})
+            return render(request, 'socialnews/story/new.html', {'form': form})
 
 
 class EditStory(View):
     def get(self, request, id):
         story = get_object_or_404(Story, pk=id)
         form = StoryForm(instance=story)
-        return render(request, 'socialnews/edit_story.html', {'form': form, 'id': id})
+        return render(request, 'socialnews/story/edit.html', {'form': form, 'id': id})
 
     def post(self, request, id):
         story = get_object_or_404(Story, pk=id)
@@ -71,7 +71,7 @@ class EditStory(View):
             story.save()
             return HttpResponseRedirect('/')
         else:
-            return render(request, 'socialnews/edit_story.html', {'form': form, 'id': id})
+            return render(request, 'socialnews/story/edit.html', {'form': form, 'id': id})
 
 
 @login_required()

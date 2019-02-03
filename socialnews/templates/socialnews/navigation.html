@@ -1,7 +1,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'index' %}">
+        <a class="navbar-brand" href="{% url 'socialnews:index' %}">
             <span style="color: Tomato;">
                 <i class="fas fa-stroopwafel"></i>
             </span>
@@ -15,17 +15,17 @@
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'profile'%}">{{ user.username }}</a>
+                        <a class="nav-link" href="{% url 'socialnews:profile'%}">{{ user.username }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'new_story' %}">لینک جدید</a>
+                        <a class="nav-link" href="{% url 'socialnews:new_story' %}">لینک جدید</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">خروج</a>
+                        <a class="nav-link" href="{% url 'socialnews:logout' %}">خروج</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">ورود</a>
+                        <a class="nav-link" href="{% url 'socialnews:login' %}">ورود</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'register_user' %}">ثبت نام</a>
