@@ -20,6 +20,7 @@ class Story(TimeStampedModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     deleted = models.BooleanField(default=False)
     number_of_comments = models.IntegerField(default=0)
+    number_of_votes = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -29,6 +30,10 @@ class Story(TimeStampedModel):
 
     def update_number_of_comments(self):
         self.number_of_comments = self.storycomment_set.count()
+        self.save()
+
+    def update_number_of_votes(self):
+        self.number_of_votes = self.storypoint_set.count()
         self.save()
 
 
@@ -43,7 +48,7 @@ class StoryComment(TimeStampedModel):
         return self.story_comment[:100]
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs) # Call the real save() method
+        super().save(*args, **kwargs)  # Call the real save() method
         self.story.update_number_of_comments()
 
     def delete(self, *args, **kwargs):
@@ -54,3 +59,11 @@ class StoryComment(TimeStampedModel):
 class StoryPoint(TimeStampedModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     story = models.ForeignKey(Story, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.story.update_number_of_votes()
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+        self.story.update_number_of_votes()

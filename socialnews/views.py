@@ -86,13 +86,10 @@ def upvote_story(request, id):
         return HttpResponseRedirect('/')
 
 
-login_required()
-
-
+@login_required()
 def downvote_stroy(request, id):
-    story = get_object_or_404(Story, pk=id)
     try:
-        story_point = StoryPoint.objects.get(user=request.user, story=story)
+        story_point = StoryPoint.objects.get(user=request.user, story_id=id)
         story_point.delete()
     except StoryPoint.DoesNotExist:
         pass

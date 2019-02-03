@@ -21,7 +21,7 @@
             </div>
             <div class="row font-size-12">
                 <div class="col-md-12">
-                    امتیاز : {{ story.storypoint_set.count }}
+                    امتیاز : {{ story.number_of_votes }}
                     | ایجاد شده توسط:
                     {{ story.user.username }}
                     در {{ story.created|jformat:"%H:%M %Y/%m/%d"}}
