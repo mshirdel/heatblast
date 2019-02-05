@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 
 from django_jalali.db import models as jmodels
 
+from .utils import get_domain
+
 
 class TimeStampedModel(models.Model):
     objects = jmodels.jManager()
@@ -21,6 +23,7 @@ class Story(TimeStampedModel):
     deleted = models.BooleanField(default=False)
     number_of_comments = models.IntegerField(default=0)
     number_of_votes = models.IntegerField(default=0)
+    url_domain_name = models.CharField(max_length=500, blank=True)
 
     def __str__(self):
         return self.title
@@ -35,6 +38,11 @@ class Story(TimeStampedModel):
     def update_number_of_votes(self):
         self.number_of_votes = self.storypoint_set.count()
         self.save()
+
+    def save(self, *args, **kwargs):
+        if self.url:
+            self.url_domain_name = get_domain(self.url)
+        super().save(*args, **kwargs)
 
 
 class StoryComment(TimeStampedModel):

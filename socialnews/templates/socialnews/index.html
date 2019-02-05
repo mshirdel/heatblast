@@ -15,6 +15,7 @@
                     </a>
                     {% if story.url %}
                         <a href="{{story.url}}" target="_blank">{{story.title}}</a>
+                        <a href="{% url 'socialnews:stories_by_domain' %}?url={{ story.url_domain_name }}">{{ story.url_domain_name }}</a>
                     {% else %}
                         <a href="{% url 'socialnews:show_story' story.id %}">{{story.title}}</a>
                     {% endif %}
@@ -25,7 +26,7 @@
                     امتیاز : {{ story.number_of_votes }}
                     | ایجاد شده توسط:
                     {{ story.user.username }}
-                    در {{ story.created|jformat:"%H:%M %Y/%m/%d"}}
+                    در {{ story.created|jformat:"%H:%M %Y/%m/%d" }}
                     {% if user.is_authenticated and story.user == user %}
                         | <a href="{% url 'socialnews:edit_story' story.id %}">ویرایش</a>
                     {% endif %} 
