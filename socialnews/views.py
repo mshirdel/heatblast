@@ -4,6 +4,8 @@ from django.views import View
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext as _
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.conf import settings
 
 from .models import Story, StoryComment, StoryPoint
 from .forms import StoryForm, StoryCommentForm, RegisterUserForm
@@ -12,12 +14,23 @@ from .forms import StoryForm, StoryCommentForm, RegisterUserForm
 class Stories(View):
     def get(self, request):
         voted_story_id = []
+        all_stories = Story.objects.all()
+        paginator = Paginator(all_stories, settings.PAGE_SIZE)
+        page = request.GET.get('page')
+        try:
+            stories = paginator.page(page)
+        except PageNotAnInteger:
+            stories = paginator.page(1)
+        except EmptyPage:
+            stories = paginator.page(paginator.num_pages)
         if request.user.is_authenticated:
             for point in request.user.storypoint_set.all():
                 voted_story_id.append(point.story_id)
         return render(request, 'socialnews/index.html', {
-            'stories': Story.objects.all(),
-            'voted_story_id': voted_story_id
+            'stories': stories,
+            'voted_story_id': voted_story_id,
+            'page': page,
+            'num_pages': list(range(paginator.num_pages))
         })
 
 

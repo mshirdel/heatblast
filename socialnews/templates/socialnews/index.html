@@ -1,6 +1,7 @@
 {% extends 'socialnews/base.html'%}
 {% load static %}
 {% load jformat %}
+{% block title%} اشتراک گذاری لینک {% endblock %}
 {% block content %}
     {% for story in stories %}
     <div class="row justify-content-md-center padding-top-10">
@@ -45,6 +46,12 @@
         </div>
     </div>
     {% endfor %}
+<div class="row justify-content-md-center padding-top-10">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+    {% include 'socialnews/pagination.html' with page=posts %}
+                </div></div></div></div>
 {% endblock %}
 
 <!-- - {{ story.created|jformat:"%A %d %B %Y %H:%M"}}-->

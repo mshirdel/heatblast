@@ -109,3 +109,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 # LOGIN_REDIRECT_URL = '/'
+
+PAGE_SIZE = 10
