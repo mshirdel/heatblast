@@ -8,11 +8,20 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="{% url 'socialnews:upvote_story' story.id %}">
-                        <span style="color: #28a745">
-                            <i class="fas fa-thumbs-up"></i>
-                        </span>
-                    </a>
+                    {% if story.id in voted_story_id %}
+                        <a id="downvote" href="{% url 'socialnews:downvote_story' story.id %}">
+                            <span style="color: tomato">
+                                <i class="fas fa-thumbs-down"></i>
+                            </span>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'socialnews:upvote_story' story.id %}">
+                            <span style="color: #28a745">
+                                <i class="fas fa-thumbs-up"></i>
+                            </span>
+                        </a>
+                    {% endif %}
+
                     {% if story.url %}
                         <a href="{{story.url}}" target="_blank">{{story.title}}</a>
                         <a href="{% url 'socialnews:stories_by_domain' %}?url={{ story.url_domain_name }}">{{ story.url_domain_name }}</a>
@@ -34,25 +43,26 @@
                     | <a href="{% url 'socialnews:show_story' story.id %}">گفتگو
                         [{{ story.number_of_comments }}]
                     </a>
-                    {% if story.id in voted_story_id %}
-                        | 
-                        <a href="{% url 'socialnews:downvote_story' story.id %}">
-                            <span style="color: tomato">
-                                <i class="fas fa-thumbs-down"></i>
-                            </span>
-                        </a> 
-                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
     {% endfor %}
-<div class="row justify-content-md-center padding-top-10">
+    <div class="row justify-content-md-center padding-top-10">
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-12">
-    {% include 'socialnews/pagination.html' with page=posts %}
-                </div></div></div></div>
+                    {% include 'socialnews/pagination.html' with page=page_obj %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
-
+{% block javascript %}
+    <script language="JavaScript">
+        $('document').ready(function(){
+            
+        });
+    </script>
+{% endblock %}
 <!-- - {{ story.created|jformat:"%A %d %B %Y %H:%M"}}-->

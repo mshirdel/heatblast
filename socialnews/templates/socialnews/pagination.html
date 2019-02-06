@@ -1,12 +1,13 @@
+{% load socialnews_filters %}
 <ul class="pagination">
-    {% if stories.has_previous %}
+    {% if page.has_previous %}
         <li class="page-item">
-            <a class="page-link" href="?page={{ stories.previous_page_number }}">Previous</a>
+            <a class="page-link" href="?page={{ page.previous_page_number }}">Previous</a>
         </li>
     {% endif %}
 
-    {% for i in num_pages %}
-        {% if stories.number == forloop.counter %}
+    {% for i in page.paginator.num_pages|times %}
+        {% if page.number == forloop.counter %}
             <li class="page-item active">
                 <span class="page-link"> {{ forloop.counter }} </span>
             </li>
@@ -17,9 +18,9 @@
         {% endif %}
     {% endfor %}
 
-    {% if stories.has_next %}
+    {% if page.has_next %}
         <li class="page-item">
-            <a class="page-link" href="?page={{ stories.next_page_number }}">Next</a>
+            <a class="page-link" href="?page={{ page.next_page_number }}">Next</a>
         </li>
     {% endif %}
 

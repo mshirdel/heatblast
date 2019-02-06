@@ -27,3 +27,5 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+PAGE_SIZE = 10

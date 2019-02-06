@@ -1,37 +1,37 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
+from django.views.generic import ListView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext as _
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
 
 from .models import Story, StoryComment, StoryPoint
 from .forms import StoryForm, StoryCommentForm, RegisterUserForm
 
 
-class Stories(View):
-    def get(self, request):
+class StoryListView(ListView):
+    queryset = Story.objects.all()
+    context_object_name = 'stories'
+    paginate_by = settings.PAGE_SIZE
+    template_name = 'socialnews/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         voted_story_id = []
-        all_stories = Story.objects.all()
-        paginator = Paginator(all_stories, settings.PAGE_SIZE)
-        page = request.GET.get('page')
-        try:
-            stories = paginator.page(page)
-        except PageNotAnInteger:
-            stories = paginator.page(1)
-        except EmptyPage:
-            stories = paginator.page(paginator.num_pages)
-        if request.user.is_authenticated:
-            for point in request.user.storypoint_set.all():
+        if self.request.user.is_authenticated:
+            for point in self.request.user.storypoint_set.all():
                 voted_story_id.append(point.story_id)
-        return render(request, 'socialnews/index.html', {
-            'stories': stories,
-            'voted_story_id': voted_story_id,
-            'page': page,
-            'num_pages': list(range(paginator.num_pages))
-        })
+        context['voted_story_id'] = voted_story_id
+        return context
+
+    def get_queryset(self):
+        query_set = super().get_queryset()
+        if self.request.GET.get('url'):
+            url = self.request.GET.get('url')
+            return query_set.filter(url_domain_name=url)
+        return query_set
 
 
 class ShowStory(View):
@@ -93,42 +93,30 @@ class EditStory(View):
 
 @login_required()
 def upvote_story(request, id):
+    result_url = '/'
+    if request.GET.get('page'):
+        result_url = f"/?page={request.GET.get('page')}"
     story = get_object_or_404(Story, pk=id)
     try:
-        story_point = StoryPoint.objects.get(user=request.user, story=story)
-        return HttpResponseRedirect('/')
+        StoryPoint.objects.get(user=request.user, story=story)
+        return HttpResponseRedirect(result_url)
     except StoryPoint.DoesNotExist:
         story_point = StoryPoint(user=request.user, story=story)
         story_point.save()
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect(result_url)
 
 
 @login_required()
 def downvote_stroy(request, id):
+    result_url = '/'
+    if request.GET.get('page'):
+        result_url = f"/?page={request.GET.get('page')}"
     try:
         story_point = StoryPoint.objects.get(user=request.user, story_id=id)
         story_point.delete()
     except StoryPoint.DoesNotExist:
         pass
-    return HttpResponseRedirect('/')
-
-
-def filter_story_by_domain(request):
-    url = request.GET.get('url')
-    filtered_stories = Story.objects.filter(url_domain_name=url)
-    paginator = Paginator(filtered_stories, settings.PAGE_SIZE)
-    page = request.GET.get('page')
-    try:
-        stories = paginator.page(page)
-    except PageNotAnInteger:
-        stories = paginator.page(1)
-    except EmptyPage:
-        stories = paginator.page(paginator.num_pages)
-    return render(request, 'socialnews/index.html', {
-        'stories': stories,
-        'page': page,
-        'num_pages': list(range(paginator.num_pages))
-    })
+    return HttpResponseRedirect(result_url)
 
 
 class PanelView(View):
@@ -165,3 +153,9 @@ class RegisterUserView(View):
             return HttpResponseRedirect('/')
         else:
             return render(request, 'socialnews/register_user.html', {'form': form, 'errors': form.errors})
+
+
+def test(request):
+    import pdb
+    pdb.set_trace()
+    return HttpResponse('ok')

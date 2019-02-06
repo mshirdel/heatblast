@@ -1,7 +1,8 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import (Stories, PanelView, NewStory, EditStory, ProfileView, ShowStory,
-                    upvote_story, downvote_stroy, RegisterUserView, filter_story_by_domain)
+from .views import (PanelView, NewStory, EditStory, ProfileView, ShowStory,
+                    upvote_story, downvote_stroy, RegisterUserView,
+                    StoryListView, test)
 
 app_name = 'socialnews'
 urlpatterns = [
@@ -21,17 +22,18 @@ urlpatterns = [
     # STORIES         #
     ###################
 
-    path('', Stories.as_view(), name='index'),
+    path('', StoryListView.as_view(), name='index'),
     path('story/<int:id>', ShowStory.as_view(), name='show_story'),
     path('story/<int:id>/upvote', upvote_story, name='upvote_story'),
     path('story/<int:id>/downvote', downvote_stroy, name='downvote_story'),
     path('story/new', NewStory.as_view(), name='new_story'),
     path('story/<int:id>/edit', EditStory.as_view(), name='edit_story'),
-    path('story/bydomain', filter_story_by_domain, name='stories_by_domain'),
+    path('story/site', StoryListView.as_view(), name='stories_by_domain'),
 
     ###################
     # OTHER           #
     ###################
 
-    path('panel/', PanelView.as_view(), name='admin')
+    path('panel/', PanelView.as_view(), name='admin'),
+    path('test/', test),
 ]
