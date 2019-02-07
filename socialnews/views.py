@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext as _
 from django.conf import settings
+from django.utils.decorators import method_decorator
+from django.contrib import messages
 
 from .models import Story, StoryComment, StoryPoint
 from .forms import StoryForm, StoryCommentForm, RegisterUserForm
@@ -42,18 +44,27 @@ class ShowStory(View):
                       {'story': story, 'form': story_comment_form})
 
     def post(self, request, id):
-        story = Story.objects.get(pk=id)
-        form = StoryCommentForm(request.POST)
-        if form.is_valid():
-            comment = StoryComment(commenter=request.user, story=story,
-                                   story_comment=form.cleaned_data['story_comment'])
-            comment.save()
-            return HttpResponseRedirect('/')
+        story = get_object_or_404(Story, pk=id)
+        if request.user.is_authenticated:
+            form = StoryCommentForm(request.POST)
+            if form.is_valid():
+                comment = StoryComment(commenter=request.user, story=story,
+                                       story_comment=form.cleaned_data['story_comment'])
+                comment.save()
+                return HttpResponseRedirect('/')
+            else:
+                return render(request, 'socialnews/story/show.html',
+                              {'story': story, 'form': form})
         else:
+            form = StoryCommentForm()
+            messages.add_message(request,
+                                 messages.WARNING,
+                                 "برای ثبت دیدگاه باید دارای حساب کاربری باشید.")
             return render(request, 'socialnews/story/show.html',
                           {'story': story, 'form': form})
 
 
+@method_decorator(login_required, name='dispatch')
 class NewStory(View):
     def get(self, request):
         form = StoryForm()
@@ -73,6 +84,7 @@ class NewStory(View):
             return render(request, 'socialnews/story/new.html', {'form': form})
 
 
+@method_decorator(login_required, name='dispatch')
 class EditStory(View):
     def get(self, request, id):
         story = get_object_or_404(Story, pk=id)
@@ -124,6 +136,7 @@ class PanelView(View):
         return render(request, 'socialnews/panel.html')
 
 
+@method_decorator(login_required, name='dispatch')
 class ProfileView(View):
     def get(self, request):
         return render(request, 'socialnews/profile.html')

@@ -67,3 +67,7 @@ h1 {
 .padding-top-50 {
     padding-top: 50px;
 }
+
+ul.message-alert li {
+    display: inline;
+}

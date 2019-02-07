@@ -24,10 +24,10 @@ urlpatterns = [
 
     path('', StoryListView.as_view(), name='index'),
     path('story/<int:id>', ShowStory.as_view(), name='show_story'),
-    path('story/<int:id>/upvote', upvote_story, name='upvote_story'),
-    path('story/<int:id>/downvote', downvote_stroy, name='downvote_story'),
+    path('story/upvote/<int:id>', upvote_story, name='upvote_story'),
+    path('story/downvote/<int:id>', downvote_stroy, name='downvote_story'),
     path('story/new', NewStory.as_view(), name='new_story'),
-    path('story/<int:id>/edit', EditStory.as_view(), name='edit_story'),
+    path('story/edit/<int:id>', EditStory.as_view(), name='edit_story'),
     path('story/site', StoryListView.as_view(), name='stories_by_domain'),
 
     ###################

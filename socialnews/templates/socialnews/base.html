@@ -20,7 +20,9 @@
 
 <body>
     {% include "socialnews/navigation.html" %}
+    
     <div class="container container-padding-top">
+        {% include "socialnews/messages.html"%}
         {% block content %} {% endblock %}
     </div>
     {% include "socialnews/footer.html" %}
