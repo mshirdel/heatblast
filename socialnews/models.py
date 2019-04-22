@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 from django_jalali.db import models as jmodels
 
@@ -51,6 +52,9 @@ class Story(TimeStampedModel):
         if self.url:
             self.url_domain_name = get_domain(self.url)
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("socialnews:show_story", args=[self.id])
 
 
 class StoryComment(TimeStampedModel):

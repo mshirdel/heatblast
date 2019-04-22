@@ -26,7 +26,7 @@
                         <a href="{{story.url}}" target="_blank">{{story.title}}</a>
                         <a href="{% url 'socialnews:stories_by_domain' %}?url={{ story.url_domain_name }}">{{ story.url_domain_name }}</a>
                     {% else %}
-                        <a href="{% url 'socialnews:show_story' story.id %}">{{story.title}}</a>
+                        <a href="{{ story.get_absolute_url }}">{{story.title}}</a>
                     {% endif %}
                 </div>
             </div>
@@ -40,7 +40,7 @@
                         | <a href="{% url 'socialnews:edit_story' story.id %}">ویرایش</a>
                     {% endif %} 
                     
-                    | <a href="{% url 'socialnews:show_story' story.id %}">گفتگو
+                    | <a href="{{ story.get_absolute_url }}">گفتگو
                         [{{ story.number_of_comments }}]
                     </a>
                 </div>
