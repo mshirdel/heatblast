@@ -1,5 +1,8 @@
+import requests
+from bs4 import BeautifulSoup
+
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views import View
 from django.views.generic import ListView
 from django.contrib.auth.models import User
@@ -168,7 +171,18 @@ class RegisterUserView(View):
             return render(request, 'socialnews/register_user.html', {'form': form, 'errors': form.errors})
 
 
+def fetch_title(request):
+    url = request.GET.get('url', None)
+    if url is not None:
+        r = requests.get(url)
+        if r.status_code == 200:
+            soup = BeautifulSoup(r.text, 'html.parser')
+            return JsonResponse({'title': soup.title.text})
+        else:
+            return JsonResponse({'error': 'fetch title not work'})
+    else:
+        return JsonResponse({'error': 'url not found'})
+
+
 def test(request):
-    import pdb
-    pdb.set_trace()
     return HttpResponse('ok')

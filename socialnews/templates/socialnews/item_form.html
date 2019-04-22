@@ -2,7 +2,13 @@
 {% for field in form %}
     <div class="form-group">
         {{ field.errors}}
+        {% if field.name == 'title' %}
+            {{ field.label_tag }} 
+            <button type="button" id="btnFetchTitle" class="btn btn-outline-info btn-sm font-size-12">واکشی عنوان</button> 
+            {{ field }}
+        {% else %}
         {{ field.label_tag }} {{ field }}
+        {% endif %}
         {% if field.help_text %}
             <p class="help">{{ field.help_text|safe }}</p>
         {% endif %}

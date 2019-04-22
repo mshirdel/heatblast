@@ -1,0 +1,26 @@
+<script language='javascript'>
+    $('document').ready(function () {
+        $('#btnFetchTitle').click(function () {
+            if ($('#id_url').val()) {
+                $.ajax({
+                        type: 'GET',
+                        url: '{% url "socialnews:fetch_title" %}',
+                        data: {
+                            'url': $('#id_url').val()
+                        }
+                    })
+                    .done(function (data) {
+                        if (data.title) {
+                            $("#id_title").val(data.title)
+                        }
+                        if (data.error) {
+                            console.log(data.error)
+                        }
+                    })
+                    .fail(function (jqXHR, textStatus) {
+                        console.log(textStatus);
+                    })
+            }
+        });
+    });
+</script>

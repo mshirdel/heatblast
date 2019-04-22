@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from .views import (PanelView, NewStory, EditStory, ProfileView, ShowStory,
                     upvote_story, downvote_stroy, RegisterUserView,
-                    StoryListView, test)
+                    StoryListView, fetch_title, test)
 
 app_name = 'socialnews'
 urlpatterns = [
@@ -29,6 +29,7 @@ urlpatterns = [
     path('story/new', NewStory.as_view(), name='new_story'),
     path('story/edit/<int:id>', EditStory.as_view(), name='edit_story'),
     path('story/site', StoryListView.as_view(), name='stories_by_domain'),
+    path('story/fetch_title', fetch_title, name='fetch_title'),
 
     ###################
     # OTHER           #

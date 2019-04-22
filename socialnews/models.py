@@ -15,7 +15,15 @@ class TimeStampedModel(models.Model):
         abstract = True
 
 
+class StoryManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted=False)
+
+
 class Story(TimeStampedModel):
+    objects = models.Manager()
+    stories = StoryManager()
+
     title = models.CharField(max_length=500)
     url = models.URLField(max_length=2000, blank=True, null=True)
     story_body_text = models.TextField(blank=True, null=True)

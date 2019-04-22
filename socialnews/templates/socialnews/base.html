@@ -12,7 +12,8 @@
     <title>{% block title%}{% endblock %}</title>
 
     <link href="{% static 'socialnews/css/bootstrap.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="{% static 'socialnews/css/fonts.css' %}" rel="stylesheet">
     <link href="{% static 'socialnews/css/general.css' %}" rel="stylesheet">
 
@@ -20,19 +21,23 @@
 
 <body>
     {% include "socialnews/navigation.html" %}
-    
-    <div class="container container-padding-top">
+
+    <div class="container">
         {% include "socialnews/messages.html"%}
-        {% block content %} {% endblock %}
+        <div class="row justify-content-md-center padding-top-20 padding-bottom-20 main-content">
+            <div class="col-md-6">
+                {% block content %} {% endblock %}
+            </div>
+        </div>
     </div>
     {% include "socialnews/footer.html" %}
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="{% static 'socialnews/js/jquery-3.2.1.slim.min.js' %}"></script>
+    <script src="{% static 'socialnews/js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'socialnews/js/popper.min.js' %}"></script>
     <script src="{% static 'socialnews/js/bootstrap.js' %}"></script>
 
-        {% block javascript %}
-        {% endblock %}
+    {% block javascript %}
+    {% endblock %}
 
 </body>
 

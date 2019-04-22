@@ -1,11 +1,14 @@
 {% extends 'socialnews/base.html' %}
 {% block content %}
-    <div class="row">
-        <div class="col-md-10">
+    <div class="row padding-top-10">
+        <div class="col-md-12">
             <form action="{% url 'socialnews:new_story' %}" method="POST">
                 {% include 'socialnews/item_form.html' with form=form %}
                 <button type="submit" class="btn btn-primary mt-2">انتشار</button>
             </form>
         </div>
     </div>
+{% endblock %}
+{% block javascript %}
+    {% include 'socialnews/story/fetch_title.html'%}
 {% endblock %}
