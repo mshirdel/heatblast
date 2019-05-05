@@ -36,5 +36,5 @@ urlpatterns = [
     ###################
 
     path('panel/', PanelView.as_view(), name='admin'),
-    path('test/', test),
+    path('test/<int:id>', test),
 ]

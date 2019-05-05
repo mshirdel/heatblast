@@ -28,7 +28,7 @@ class Story(TimeStampedModel):
     title = models.CharField(max_length=500)
     url = models.URLField(max_length=2000, blank=True, null=True)
     story_body_text = models.TextField(blank=True, null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='stories')
     deleted = models.BooleanField(default=False)
     number_of_comments = models.IntegerField(default=0)
     number_of_votes = models.IntegerField(default=0)
@@ -41,7 +41,7 @@ class Story(TimeStampedModel):
         ordering = ['-created']
 
     def update_number_of_comments(self):
-        self.number_of_comments = self.storycomment_set.count()
+        self.number_of_comments = self.comments.count()
         self.save()
 
     def update_number_of_votes(self):
@@ -59,7 +59,7 @@ class Story(TimeStampedModel):
 
 class StoryComment(TimeStampedModel):
     commenter = models.ForeignKey(User, on_delete=models.CASCADE)
-    story = models.ForeignKey(Story, on_delete=models.CASCADE)
+    story = models.ForeignKey(Story, on_delete=models.CASCADE, related_name='comments')
     story_comment = models.TextField()
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True)

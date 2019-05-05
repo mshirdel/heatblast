@@ -11,6 +11,7 @@ from django.utils.translation import gettext as _
 from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.contrib import messages
+from django.core.mail import send_mail
 
 from .models import Story, StoryComment, StoryPoint
 from .forms import StoryForm, StoryCommentForm, RegisterUserForm
@@ -51,8 +52,11 @@ class ShowStory(View):
         if request.user.is_authenticated:
             form = StoryCommentForm(request.POST)
             if form.is_valid():
-                comment = StoryComment(commenter=request.user, story=story,
-                                       story_comment=form.cleaned_data['story_comment'])
+                comment = form.save(commit=False)
+                # comment = StoryComment(commenter=request.user, story=story,
+                #                        story_comment=form.cleaned_data['story_comment'])
+                comment.commenter = request.user
+                comment.story = story
                 comment.save()
                 return HttpResponseRedirect('/')
             else:
@@ -184,5 +188,9 @@ def fetch_title(request):
         return JsonResponse({'error': 'url not found'})
 
 
-def test(request):
-    return HttpResponse('ok')
+def test(request, id):
+    story = get_object_or_404(Story, id=id)
+    subject = story.title
+    message = request.build_absolute_uri(story.get_absolute_url())
+    send_mail(subject, message, 'helermiles@gmail.com', ['mshirdel@gmail.com'])
+    return HttpResponse(f"{subject} has been sent")

@@ -96,3 +96,5 @@ hesabketab/__pycache__/*.pyc
 *.csv
 .vscode/
 .idea/
+set_env.py
+heatblast/settings/development.py
