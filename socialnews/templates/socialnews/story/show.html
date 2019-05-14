@@ -21,6 +21,7 @@
                 در {{ story.created|jformat:"%H:%M %Y/%m/%d"}}
             </div>
         </div>
+        {% include 'socialnews/story/render_tags.html' %}
         <div class="row padding-top-10">
             <div class="col-md-12">
                 <p>{{story.story_body_text}}</p>
@@ -43,6 +44,19 @@
                 {% endfor %}
             </div>
         </div>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-12">
+        similar stories: <br>
+        <ul>
+        {% for story in similar_stories %}
+            <li>
+                <a href="{{ story.get_absolute_url }}">{{story.title}}</a>
+            </li>
+        {% endfor %}
+        </ul>
     </div>
 </div>
 

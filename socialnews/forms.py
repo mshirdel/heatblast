@@ -5,7 +5,7 @@ from .models import Story, StoryComment
 class StoryForm(forms.ModelForm):
     class Meta:
         model = Story
-        fields = ['url', 'title', 'story_body_text']
+        fields = ['url', 'title', 'story_body_text', 'tags']
         widgets = {
             'url': forms.URLInput(attrs={'class': 'form-control'}),
             'title': forms.TextInput(attrs={'class': 'form-control'}),
@@ -14,7 +14,8 @@ class StoryForm(forms.ModelForm):
         labels = {
             'url': 'آدرس لینک',
             'title': 'عنوان',
-            'story_body_text': 'متن برای گفتگو'
+            'story_body_text': 'متن برای گفتگو',
+            'tags': 'تگ'
         }
 
 

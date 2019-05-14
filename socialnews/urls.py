@@ -23,6 +23,7 @@ urlpatterns = [
     ###################
 
     path('', StoryListView.as_view(), name='index'),
+    path('story/tag/<slug:tag_slug>', StoryListView.as_view(), name='story_list_by_tag'),
     path('story/<int:id>', ShowStory.as_view(), name='show_story'),
     path('story/upvote/<int:id>', upvote_story, name='upvote_story'),
     path('story/downvote/<int:id>', downvote_stroy, name='downvote_story'),

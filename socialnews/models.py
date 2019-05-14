@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 from django_jalali.db import models as jmodels
+from taggit.managers import TaggableManager
 
 from .utils import get_domain
 
@@ -33,6 +34,7 @@ class Story(TimeStampedModel):
     number_of_comments = models.IntegerField(default=0)
     number_of_votes = models.IntegerField(default=0)
     url_domain_name = models.CharField(max_length=500, blank=True)
+    tags = TaggableManager()
 
     def __str__(self):
         return self.title

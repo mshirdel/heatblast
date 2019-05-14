@@ -12,6 +12,9 @@ from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.db.models import Count
+
+from taggit.models import Tag
 
 from .models import Story, StoryComment, StoryPoint
 from .forms import StoryForm, StoryCommentForm, RegisterUserForm
@@ -37,15 +40,31 @@ class StoryListView(ListView):
         if self.request.GET.get('url'):
             url = self.request.GET.get('url')
             return query_set.filter(url_domain_name=url)
+        if self.kwargs.get('tag_slug'):
+            tag_slug = self.kwargs.get('tag_slug')
+            tag = get_object_or_404(Tag, slug=tag_slug)
+            messages.add_message(self.request,
+                                 messages.INFO,
+                                 f"Stories tagged with {tag_slug}")
+            return query_set.filter(tags__in=[tag])
         return query_set
 
 
 class ShowStory(View):
     def get(self, request, id):
         story = get_object_or_404(Story, pk=id)
+        story_tags_ids = story.tags.values_list('id', flat=True)
+        similar_stories = Story.stories.filter(
+            tags__in=story_tags_ids).exclude(id=story.id)
+        similar_stories = similar_stories.annotate(
+            same_tags=Count('tags')).order_by('-same_tags', '-created')[:4]
         story_comment_form = StoryCommentForm()
         return render(request, 'socialnews/story/show.html',
-                      {'story': story, 'form': story_comment_form})
+                      {
+                          'story': story,
+                          'form': story_comment_form,
+                          'similar_stories': similar_stories
+                      })
 
     def post(self, request, id):
         story = get_object_or_404(Story, pk=id)
@@ -53,8 +72,6 @@ class ShowStory(View):
             form = StoryCommentForm(request.POST)
             if form.is_valid():
                 comment = form.save(commit=False)
-                # comment = StoryComment(commenter=request.user, story=story,
-                #                        story_comment=form.cleaned_data['story_comment'])
                 comment.commenter = request.user
                 comment.story = story
                 comment.save()
@@ -80,12 +97,10 @@ class NewStory(View):
     def post(self, request):
         form = StoryForm(request.POST)
         if form.is_valid():
-            story = Story(title=form.cleaned_data['title'],
-                          url=form.cleaned_data['url'],
-                          story_body_text=form.cleaned_data['story_body_text'],
-                          user=request.user
-                          )
+            story = form.save(commit=False)
+            story.user = request.user
             story.save()
+            form.save_m2m()
             return HttpResponseRedirect('/')
         else:
             return render(request, 'socialnews/story/new.html', {'form': form})
@@ -103,7 +118,11 @@ class EditStory(View):
         story = get_object_or_404(Story, pk=id)
         form = StoryForm(request.POST, instance=story)
         if form.is_valid():
+            story.tags.clear()
+            for tag_slug in form.cleaned_data['tags']:
+                story.tags.add(tag_slug)
             story.save()
+            # form.save_m2m() # produce error => 'StoryForm' object has no attribute 'save_m2m'
             return HttpResponseRedirect('/')
         else:
             return render(request, 'socialnews/story/edit.html',
