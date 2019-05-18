@@ -1,0 +1,17 @@
+{% extends 'socialnews/base.html' %}
+{% block title%} Search Result {% endblock %}
+{% block content %}
+    {% if query %}
+        <h1>Stories containing "{{ query }}" </h1>
+        <h3>Found {{ results.count }}</h3>
+        {% for story in results %}
+            <a href="{{ story.get_absolute_url }}">{{ story.title }}</a>
+            <hr>
+        {% empty %}
+            <p>Nothing :)</p>
+        {% endfor %}
+    {% else %}
+        <h3>Search</h3>
+        {% include 'socialnews/search.html'%}
+    {% endif %}
+{% endblock %}

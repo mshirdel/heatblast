@@ -7,6 +7,7 @@ from django.views import View
 from django.views.generic import ListView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.utils.translation import gettext as _
 from django.conf import settings
 from django.utils.decorators import method_decorator
@@ -17,7 +18,7 @@ from django.db.models import Count
 from taggit.models import Tag
 
 from .models import Story, StoryComment, StoryPoint
-from .forms import StoryForm, StoryCommentForm, RegisterUserForm
+from .forms import StoryForm, StoryCommentForm, RegisterUserForm, SearchForm
 
 
 class StoryListView(ListView):
@@ -205,6 +206,24 @@ def fetch_title(request):
             return JsonResponse({'error': 'fetch title not work'})
     else:
         return JsonResponse({'error': 'url not found'})
+
+
+def story_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+    if 'q' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['q']
+            search_vector = SearchVector('title', 'story_body_text')
+            search_query = SearchQuery(query)
+            results = Story.stories.annotate(
+                search=search_vector,
+                rank=SearchRank(search_vector, search_query)
+            ).filter(search=search_query).order_by('-rank')
+    context = {'query': query, 'results': results}
+    return render(request, 'socialnews/search_result.html', context)
 
 
 def test(request, id):

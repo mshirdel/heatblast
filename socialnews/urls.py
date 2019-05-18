@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from .views import (PanelView, NewStory, EditStory, ProfileView, ShowStory,
                     upvote_story, downvote_stroy, RegisterUserView,
-                    StoryListView, fetch_title, test)
+                    StoryListView, fetch_title, story_search, test)
 from django.contrib.sitemaps.views import sitemap
 from socialnews.sitemaps import StorySitemap
 from .feeds import LatesStoryFeed
@@ -49,4 +49,5 @@ urlpatterns = [
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
          name='django.contrib.sitemaps.view.sitemap'),
     path('feed/', LatesStoryFeed(), name='story_feed'),
+    path('search/', story_search, name='story_search'),
 ]

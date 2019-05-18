@@ -38,3 +38,7 @@ class RegisterUserForm(forms.Form):
                                label='کلمه عبور', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     re_password = forms.CharField(min_length=6, label='تکرار کلمه عبور', widget=forms.PasswordInput(
         attrs={'class': 'form-control'}))
+
+
+class SearchForm(forms.Form):
+    q = forms.CharField()
