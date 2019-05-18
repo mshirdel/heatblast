@@ -14,7 +14,7 @@ class StoryForm(forms.ModelForm):
         labels = {
             'url': 'آدرس لینک',
             'title': 'عنوان',
-            'story_body_text': 'متن برای گفتگو',
+            'story_body_text': 'Story body (Use Markdown)',
             'tags': 'تگ'
         }
 

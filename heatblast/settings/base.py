@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'django_jalali',
     'socialnews',
     'taggit',
@@ -112,3 +114,5 @@ STATIC_URL = '/static/'
 # LOGIN_REDIRECT_URL = '/'
 
 PAGE_SIZE = 20
+
+SITE_ID=1

@@ -1,6 +1,7 @@
 {% extends 'socialnews/base.html'%}
 {% load static %}
 {% load jformat %}
+{% load socialnews_tags %}
 {% block title%} اشتراک گذاری لینک {% endblock %}
 {% block content %}
     {% for story in stories %}
@@ -67,5 +68,11 @@
             </div>
         </div>
     </div>
+    
+    {% comment %}
+    <p>Latest Posts: </p>
+    {% show_latest_stories 5 %}
+    {% endcomment %}
+
 {% endblock %}
 <!-- - {{ story.created|jformat:"%A %d %B %Y %H:%M"}}-->

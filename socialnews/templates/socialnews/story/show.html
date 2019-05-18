@@ -1,5 +1,6 @@
 {% extends 'socialnews/base.html'%}
 {% load jformat %}
+{% load socialnews_filters %}
 {% block content %}
 <div class="row padding-top-10">
     <div class="col-md-12">
@@ -24,7 +25,7 @@
         {% include 'socialnews/story/render_tags.html' %}
         <div class="row padding-top-10">
             <div class="col-md-12">
-                <p>{{story.story_body_text}}</p>
+                <p>{{story.story_body_text|markdown}}</p>
             </div>
         </div>
         <div class="row padding-top-10">

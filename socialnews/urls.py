@@ -3,6 +3,13 @@ from django.contrib.auth import views as auth_views
 from .views import (PanelView, NewStory, EditStory, ProfileView, ShowStory,
                     upvote_story, downvote_stroy, RegisterUserView,
                     StoryListView, fetch_title, test)
+from django.contrib.sitemaps.views import sitemap
+from socialnews.sitemaps import StorySitemap
+from .feeds import LatesStoryFeed
+
+sitemaps = {
+    'stories': StorySitemap
+}
 
 app_name = 'socialnews'
 urlpatterns = [
@@ -23,7 +30,8 @@ urlpatterns = [
     ###################
 
     path('', StoryListView.as_view(), name='index'),
-    path('story/tag/<slug:tag_slug>', StoryListView.as_view(), name='story_list_by_tag'),
+    path('story/tag/<slug:tag_slug>',
+         StoryListView.as_view(), name='story_list_by_tag'),
     path('story/<int:id>', ShowStory.as_view(), name='show_story'),
     path('story/upvote/<int:id>', upvote_story, name='upvote_story'),
     path('story/downvote/<int:id>', downvote_stroy, name='downvote_story'),
@@ -38,4 +46,7 @@ urlpatterns = [
 
     path('panel/', PanelView.as_view(), name='admin'),
     path('test/<int:id>', test),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
+         name='django.contrib.sitemaps.view.sitemap'),
+    path('feed/', LatesStoryFeed(), name='story_feed'),
 ]
