@@ -1,10 +1,14 @@
 {% if messages %}
-    <div class="row justify-content-md-center padding-top-10">
-            <ul class='message-alert'>
+<div class='container'>
+    <div class="row">
+        <div class="col-md-12">
+            <div class='message-alert'>
                 {% for message in messages %}
-                    <li {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}</div>
                 {% endfor %}
-            </ul>
+            </div>
+        </div>
     </div>
     <br>
+</div>
 {% endif %}

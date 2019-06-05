@@ -1,5 +1,8 @@
 from django import forms
-from .models import Story, StoryComment
+from django.contrib.auth.models import User
+from django_jalali import forms as jforms
+
+from .models import Profile, Story, StoryComment
 
 
 class StoryForm(forms.ModelForm):
@@ -31,14 +34,44 @@ class StoryCommentForm(forms.ModelForm):
         }
 
 
-class RegisterUserForm(forms.Form):
-    username = forms.CharField(help_text='نام کاربری دلخواه', strip=True,
-                               label='نام کاربری', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    password = forms.CharField(min_length=6,
-                               label='کلمه عبور', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    re_password = forms.CharField(min_length=6, label='تکرار کلمه عبور', widget=forms.PasswordInput(
-        attrs={'class': 'form-control'}))
+class RegisterUserForm(forms.ModelForm):
+    password = forms.CharField(label='Password',
+                               widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Reapet password',
+                                widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'email')
+
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd['password'] != cd['password2']:
+            raise forms.ValidationError('Password don\'t match.')
+        return cd['password2']
 
 
 class SearchForm(forms.Form):
     q = forms.CharField()
+
+
+class EditUserForm(forms.ModelForm):
+    class Meta():
+        model = User
+        fields = ('first_name', 'last_name', 'email')
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+        }
+
+
+class EditProfileForm(forms.ModelForm):
+    class Meta():
+        model = Profile
+        fields = ('photo', 'date_of_birth',)
+        widgets = {
+            'date_of_birth': jforms.widgets.jDateInput(
+                attrs={'class': 'form-control datepicker'}
+            )
+        }

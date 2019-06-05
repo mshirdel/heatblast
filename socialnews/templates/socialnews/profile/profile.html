@@ -1,0 +1,19 @@
+{% extends 'socialnews/base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-02">
+            <h1>{{ user.username }}</h1>
+        </div>
+        <div class="col-md-10">
+            {% if user.profile.photo %}
+                <img src="{{ user.profile.photo.url }}" alt="{{ user.username }}" class="img-thumbnail profile-image">
+            {% endif %}
+        </div>
+    </div>
+    
+    
+    <ul>
+        <li><a href="{% url 'socialnews:password_change' %}">Change password</a></li>
+        <li><a href="{% url 'socialnews:profile_edit' %}">Edit Profile</a></li>
+    </ul>
+{% endblock %}

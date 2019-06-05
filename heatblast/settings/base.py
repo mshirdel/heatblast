@@ -26,11 +26,9 @@ SECRET_KEY = '^9r2r5g$&w$yvorj#u3^cg52^u-rv1(wy+@kjiu!_isz*38zy_'
 # DEBUG = False
 
 
-
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -41,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'django_jalali',
     'socialnews',
+    'django.contrib.admin',
     'taggit',
 ]
 
@@ -112,8 +111,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-# LOGIN_REDIRECT_URL = '/'
+# LOGIN_REDIRECT_URL = 'profile'
+# LOGIN_URL = 'login'
+# LOGOUT_URL = 'logout/'
 
 PAGE_SIZE = 20
 
-SITE_ID=1
+SITE_ID = 1
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

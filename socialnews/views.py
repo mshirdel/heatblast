@@ -17,12 +17,13 @@ from django.db.models import Count
 
 from taggit.models import Tag
 
-from .models import Story, StoryComment, StoryPoint
-from .forms import StoryForm, StoryCommentForm, RegisterUserForm, SearchForm
+from .models import Story, StoryComment, StoryPoint, Profile
+from .forms import (StoryForm, StoryCommentForm, RegisterUserForm, SearchForm,
+                    EditUserForm, EditProfileForm)
 
 
 class StoryListView(ListView):
-    queryset = Story.objects.all()
+    queryset = Story.stories.all().order_by('-number_of_votes')
     context_object_name = 'stories'
     paginate_by = settings.PAGE_SIZE
     template_name = 'socialnews/index.html'
@@ -48,6 +49,8 @@ class StoryListView(ListView):
                                  messages.INFO,
                                  f"Stories tagged with {tag_slug}")
             return query_set.filter(tags__in=[tag])
+        if self.request.path == '/story/latest/':
+            return Story.stories.all().order_by('-created')
         return query_set
 
 
@@ -166,7 +169,36 @@ class PanelView(View):
 @method_decorator(login_required, name='dispatch')
 class ProfileView(View):
     def get(self, request):
-        return render(request, 'socialnews/profile.html')
+        return render(request, 'socialnews/profile/profile.html')
+
+
+@method_decorator(login_required, name='dispatch')
+class ProfileEditView(View):
+    def get(self, request):
+        user_form = EditUserForm(instance=request.user)
+        profile_form = EditProfileForm(instance=request.user.profile)
+        context = {
+            'user_form': user_form,
+            'profile_form': profile_form
+        }
+        return render(request, 'socialnews/profile/edit.html', context)
+
+    def post(self, request):
+        user_form = EditUserForm(instance=request.user, data=request.POST)
+        profile_form = EditProfileForm(
+            instance=request.user.profile, data=request.POST, files=request.FILES)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+        context = {
+            'user_form': user_form,
+            'profile_form': profile_form
+        }
+        messages.add_message(request,
+                             messages.INFO,
+                             "Your profile was updated")
+        return render(request, 'socialnews/profile/edit.html', context)
+
 
 
 class RegisterUserView(View):
@@ -175,21 +207,12 @@ class RegisterUserView(View):
         return render(request, 'socialnews/register_user.html', {'form': form})
 
     def post(self, request):
-        errors = []
         form = RegisterUserForm(request.POST)
         if form.is_valid():
-            if form.cleaned_data['password'] == form.cleaned_data['re_password']:
-                if get_object_or_404(User, username=form.cleaned_data['username']):
-                    errors.append('این نام کاربری قبلا استفاده شده است.')
-                    return render(request, 'socialnews/register_user.html', {'form': form, 'errors': errors})
-                else:
-                    new_user = User.objects.create_user(
-                        form.cleaned_data['username'],
-                        password=form.cleaned_data['password'])
-                    new_user.save()
-            else:
-                errors.append('کلمه عبور و تکرار کلمه با هم برابر نیست.')
-                return render(request, 'socialnews/register_user.html', {'form': form, 'errors': errors})
+            new_user = form.save(commit=False)
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.save()
+            Profile.objects.create(user=new_user)
             return HttpResponseRedirect('/')
         else:
             return render(request, 'socialnews/register_user.html', {'form': form, 'errors': form.errors})

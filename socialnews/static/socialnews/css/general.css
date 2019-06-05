@@ -9,7 +9,7 @@ body {
     /* padding-top: 54px; */
     /* font-size: 14px; */
     margin-bottom: 60px;
-    background-color: rgb(230, 230, 230);
+    /* background-color: rgb(230, 230, 230); */
 }
 
 #footer {
@@ -96,4 +96,18 @@ ul.message-alert li {
 
 .main-content {
     background-color: white;
+}
+
+.form-errors {
+    font-size: 12px;
+    color: red;
+}
+
+.form-errors > li {
+    list-style: none;
+}
+
+.profile-image {
+    width: 150px;
+    
 }

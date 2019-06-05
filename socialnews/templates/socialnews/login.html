@@ -1,39 +1,50 @@
 {% extends "socialnews/base.html" %}
-
+{% block title %} Log in to HeatBlast - Social News {% endblock %}
 {% block content %}
-{% if errors %}
-    <p class="alert alert-danger" role="alert">کلمه عبور یا نام کاربری اشتباه است. دوباره سعی کنید.</p>
-{% endif %}
-{% if next %}
-    {% if user.is_authenticated %}
-        <p class="alert alert-danger" role="alert">Your account doesn't have access to this page. To proceed, please login with
-        an account that has access.</p>
-    {% else %}
-        <p class="alert alert-danger" role="alert">Please login to see this page.</p>
-    {% endif %}
-{% endif %}
 <div class="row justify-content-md-center">
-    <div class="col-md-5">
-        <form class="form-signin" method="POST" action="{% url 'socialnews:login' %}">
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{{ next }}">
-            <div class="from-group">
-                <label for="id_username">نام کاربری:</label>
-                <input type="text" name="username" autofocus required id="id_username" class="form-control">
+    <div class="col-md-06">
+        {% if form.errors %}
+        <p class="alert alert-danger" role="alert">کلمه عبور یا نام کاربری اشتباه است. دوباره سعی کنید.</p>
+        {% endif %}
+        {% if next %}
+        {% if user.is_authenticated %}
+        <p class="alert alert-danger" role="alert">Your account doesn't have access to this page. To proceed, please
+            login with
+            an account that has access.</p>
+        {% else %}
+        <p class="alert alert-danger" role="alert">Please login to see this page.</p>
+        {% endif %}
+        {% endif %}
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-signin" method="POST" action="{% url 'socialnews:login' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ next }}">
+                    <div class="from-group">
+                        <label for="id_username">نام کاربری:</label>
+                        <input type="text" name="username" autofocus required id="id_username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password">کلمه عبور:</label>
+                        <input type="password" name="password" required id="id_password" class="form-control">
+                    </div>
+                    <div class="row">
+
+                        <button class="btn btn-success" type="submit">ورود</button>
+
+                        <a class="btn btn-primary" href="{% url 'socialnews:register_user' %}">ثبت نام</a>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-06">
+                            <a href="{% url 'socialnews:password_reset' %}">Forgotten your password?</a>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="id_password">کلمه عبور:</label>
-                <input type="password" name="password" required id="id_password" class="form-control">
-            </div>
-            <div class="row justify-content-md-center">
-                <div class="col-md-06">
-                    <button class="btn btn-lg btn-success btn-block" type="submit">ورود</button>
-                </div>
-                <div class="col-md-06">
-                    <a class="btn btn-lg btn-primary btn-block" href="{% url 'socialnews:register_user' %}">ثبت نام</a>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
+
+
 {% endblock %}

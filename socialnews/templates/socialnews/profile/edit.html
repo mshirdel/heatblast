@@ -1,0 +1,22 @@
+{% extends 'socialnews/base.html' %}
+{% block title %} Edit profile of {{ user.username }} {% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-06">
+            <h1>Edit Profile of {{ user.username }} </h1>
+        </div>
+        
+            
+        
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form action="." method="POST" enctype="multipart/form-data">
+                {% include 'socialnews/render_form.html' with form=user_form %}
+                {% include 'socialnews/render_form.html' with form=profile_form %}
+                <button type="submit" class="btn btn-primary mt-2">Edit</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

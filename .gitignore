@@ -98,3 +98,4 @@ hesabketab/__pycache__/*.pyc
 .idea/
 set_env.py
 heatblast/settings/development.py
+heatblast/media/
