@@ -9,8 +9,9 @@ from socialnews.sitemaps import StorySitemap
 from .feeds import LatesStoryFeed
 from .views import (EditStory, NewStory, PanelView, ProfileView,
                     RegisterUserView, ShowStory, StoryListView, downvote_stroy,
-                    fetch_title, story_search, test, upvote_story,
-                    ProfileEditView)
+                    fetch_title, story_search, upvote_story,
+                    ProfileEditView,
+                    Test)
 
 sitemaps = {
     'stories': StorySitemap
@@ -70,7 +71,7 @@ urlpatterns = [
     ###################
 
     path('panel/', PanelView.as_view(), name='admin'),
-    path('test/<int:id>', test),
+    path('test/', Test.as_view()),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
          name='django.contrib.sitemaps.view.sitemap'),
     path('feed/', LatesStoryFeed(), name='story_feed'),

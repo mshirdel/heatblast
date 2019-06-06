@@ -2,7 +2,7 @@
 {% block title %} Log in to HeatBlast - Social News {% endblock %}
 {% block content %}
 <div class="row justify-content-md-center">
-    <div class="col-md-06">
+    <div class="col-md-12">
         {% if form.errors %}
         <p class="alert alert-danger" role="alert">کلمه عبور یا نام کاربری اشتباه است. دوباره سعی کنید.</p>
         {% endif %}
@@ -36,8 +36,13 @@
 
                     </div>
                     <div class="row">
-                        <div class="col-md-06">
+                        <div class="col-md-12">
                             <a href="{% url 'socialnews:password_reset' %}">Forgotten your password?</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="{% url 'socialnews:register_user' %}">Do you wnat to register?</a>
                         </div>
                     </div>
                 </form>

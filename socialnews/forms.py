@@ -36,13 +36,18 @@ class StoryCommentForm(forms.ModelForm):
 
 class RegisterUserForm(forms.ModelForm):
     password = forms.CharField(label='Password',
-                               widget=forms.PasswordInput)
+                               widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     password2 = forms.CharField(label='Reapet password',
-                                widget=forms.PasswordInput)
+                                widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = User
         fields = ('username', 'first_name', 'email')
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+        }
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -50,20 +55,38 @@ class RegisterUserForm(forms.ModelForm):
             raise forms.ValidationError('Password don\'t match.')
         return cd['password2']
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email and User.objects.get(email=email).exists():
+            raise forms.ValidationError('Email address must be unique')
+        else:
+            return email
+
 
 class SearchForm(forms.Form):
     q = forms.CharField()
 
 
 class EditUserForm(forms.ModelForm):
+    username = forms.CharField(disabled=True, label='Username',
+                               widget=forms.TextInput(attrs={'class': 'form-control'}))
+
     class Meta():
         model = User
-        fields = ('first_name', 'last_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'email')
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
         }
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        username = self.cleaned_data.get('username')
+        if email and User.objects.filter(email=email).exclude(username=username).exists():
+            raise forms.ValidationError('Email address must be unique')
+        else:
+            return email
 
 
 class EditProfileForm(forms.ModelForm):

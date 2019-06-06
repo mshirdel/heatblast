@@ -1,0 +1,14 @@
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="alert alert-{{ message.tags }}">
+            {{ message|safe }}
+            <a href="#" class="close">x</a>
+        </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<form action="." method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary mt-2">Send e-mail</button>
+</form>

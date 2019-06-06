@@ -190,15 +190,15 @@ class ProfileEditView(View):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
+            messages.success(request, "Your profile was updated")
+        else:
+            messages.error(request, "Somthing goes wrong")
         context = {
             'user_form': user_form,
             'profile_form': profile_form
         }
-        messages.add_message(request,
-                             messages.INFO,
-                             "Your profile was updated")
+        
         return render(request, 'socialnews/profile/edit.html', context)
-
 
 
 class RegisterUserView(View):
@@ -249,9 +249,10 @@ def story_search(request):
     return render(request, 'socialnews/search_result.html', context)
 
 
-def test(request, id):
-    story = get_object_or_404(Story, id=id)
-    subject = story.title
-    message = request.build_absolute_uri(story.get_absolute_url())
-    send_mail(subject, message, 'helermiles@gmail.com', ['mshirdel@gmail.com'])
-    return HttpResponse(f"{subject} has been sent")
+class Test(View):
+    def get(self, request):
+        return render(request, 'socialnews/test.html')
+
+    def post(self, request):
+        messages.success(request, 'everything is OK')
+        return render(request, 'socialnews/test.html')
