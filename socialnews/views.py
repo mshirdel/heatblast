@@ -197,7 +197,7 @@ class ProfileEditView(View):
             'user_form': user_form,
             'profile_form': profile_form
         }
-        
+
         return render(request, 'socialnews/profile/edit.html', context)
 
 

@@ -10,3 +10,9 @@ pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 ```
+for client side assets:
+
+```
+npm install
+npm run build
+```

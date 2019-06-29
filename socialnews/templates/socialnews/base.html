@@ -1,6 +1,7 @@
+{% load render_bundle from webpack_loader %}
 {% load static %}
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" class="rtl">
 
 <head>
 
@@ -10,42 +11,21 @@
     <meta name="author" content="Meysam Shirdel">
 
     <title>{% block title%}{% endblock %}</title>
-
-    <link href="{% static 'socialnews/css/bootstrap.css' %}" rel="stylesheet">
-    <link href="{% static 'socialnews/css/persian-datepicker.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link href="{% static 'socialnews/css/fonts.css' %}" rel="stylesheet">
-    <link href="{% static 'socialnews/css/general.css' %}" rel="stylesheet">
-
+    {% render_bundle 'main' 'css' %}
+    
 </head>
 
 <body>
     {% include "socialnews/navigation.html" %}
     {% include "socialnews/messages.html"%}
-    <div class="container">
-        <div class="row padding-top-20 padding-bottom-20 ">
-            <div class="col-md-12">
-                {% block content %} {% endblock %}
-            </div>
-        </div>
-    </div>
+    <main id="main-content" role="main" class="container rtl">
+        {% block content %} {% endblock %}
+    </main>
     {% include "socialnews/footer.html" %}
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="{% static 'socialnews/js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'socialnews/js/popper.min.js' %}"></script>
-    <script src="{% static 'socialnews/js/bootstrap.js' %}"></script>
+    
     <script src="{% static 'socialnews/js/persian-date.js' %}"></script>
-    <script src="{% static 'socialnews/js/persian-datepicker.js' %}"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".datepicker").pDatepicker({
-                initialValueType: 'persian',
-                initialValue: false,
-                format: 'YYYY-M-D'
-            });
-        });
-    </script>
+    {% render_bundle 'main' 'js' %}
+    
     {% block javascript %}
     {% endblock %}
 
