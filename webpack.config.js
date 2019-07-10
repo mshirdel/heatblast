@@ -23,6 +23,9 @@ module.exports = {
       $: "jquery",
       jQuery: "jquery"
     }),
+    new webpack.ProvidePlugin({
+      persianDate: "persian-date/dist/persian-date.min.js"
+    }),
     new MiniCssExtractPlugin({
       filename: devMode ? "[name].css" : "[name].[hash].css",
       chunkFilename: devMode ? "[id].css" : "[id].[hash].css"

@@ -49,10 +49,6 @@ INSTALLED_APPS = [
     'webpack_loader',
 ]
 
-
-
-print('***')
-print(__file__)
 WEBPACK_LOADER = {
     'DEFAULT': {
         'BUNDLE_DIR_NAME': 'bundles/',
