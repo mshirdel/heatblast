@@ -136,10 +136,6 @@ ul.message-alert li {
     list-style: none;
 }
 
-.profile-image {
-    width: 150px;
-}
-
 .alert-error {
     color: #721c24;
     background-color: #f8d7da;
@@ -160,6 +156,17 @@ ul.message-alert li {
     box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
 }
 
+.profile-img {
+    border-radius: 50%;
+}
+
+.default-profile-img {
+    width: 200px;
+    height: 200px;
+}
+
+/* Customizing themes */
+/* ############################################################### */
 a {
     color: #17a2b8;
     text-decoration: none;
@@ -180,3 +187,23 @@ a:hover {
 .custom-color {
     color: #17a2b8;
 }
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+.page-link:hover {
+    z-index: 2;
+    color: #17a2b8;
+    text-decoration: none;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+.page-link {
+    color: #17a2b8;
+}
+/* ############################################################### */

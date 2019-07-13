@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'taggit',
     'webpack_loader',
+    'sorl.thumbnail',
 ]
 
 WEBPACK_LOADER = {
