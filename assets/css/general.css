@@ -90,6 +90,26 @@ h1 {
     padding-bottom: 50px;
 }
 
+.margin-top-5 {
+    margin-top: 5px;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.margin-top-15 {
+    margin-top: 15px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-top-50 {
+    margin-top: 50px;
+}
+
 ul.message-alert li {
     display: inline;
 }
@@ -121,4 +141,12 @@ ul.message-alert li {
     color: #1b1e21;
     background-color: #d6d8d9;
     border-color: #c6c8ca;
+}
+
+.body-panel {
+    background-color: white;
+    padding: 20px;
+    border: 0;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
 }

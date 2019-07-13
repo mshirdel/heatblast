@@ -1,6 +1,6 @@
 {% extends 'socialnews/base.html' %}
 {% block content %}
-    <div class="row padding-top-10">
+    <div class="row body-panel margin-top-15">
         <div class="col-md-12">
             <form action="{% url 'socialnews:new_story' %}" method="POST">
                 {% include 'socialnews/item_form.html' with form=form %}
@@ -8,7 +8,4 @@
             </form>
         </div>
     </div>
-{% endblock %}
-{% block javascript %}
-    {% include 'socialnews/story/fetch_title.html'%}
 {% endblock %}

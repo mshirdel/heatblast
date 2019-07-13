@@ -2,7 +2,8 @@
 {% load jformat %}
 {% load socialnews_filters %}
 {% block content %}
-<div class="row padding-top-10">
+<div class="body-panel margin-top-15">
+<div class="row">
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">
@@ -60,8 +61,5 @@
         </ul>
     </div>
 </div>
-
-{% endblock %}
-{% block javascript %}
-    {% include 'socialnews/story/fetch_title.html'%}
+</div>
 {% endblock %}

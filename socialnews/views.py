@@ -215,7 +215,7 @@ class RegisterUserView(View):
             Profile.objects.create(user=new_user)
             return HttpResponseRedirect('/')
         else:
-            return render(request, 'socialnews/register_user.html', {'form': form, 'errors': form.errors})
+            return render(request, 'socialnews/register_user.html', {'form': form})
 
 
 def fetch_title(request):

@@ -57,9 +57,10 @@ class RegisterUserForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if email and User.objects.get(email=email).exists():
-            raise forms.ValidationError('Email address must be unique')
-        else:
+        try:
+            if email and User.objects.get(email=email):
+                raise forms.ValidationError('Email address must be unique')
+        except User.DoesNotExist:
             return email
 
 

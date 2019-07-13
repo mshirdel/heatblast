@@ -1,22 +1,18 @@
 {% extends 'socialnews/base.html' %}
 {% block title %} Edit profile of {{ user.username }} {% endblock %}
 {% block content %}
-    <div class="row">
-        <div class="col-md-06">
-            <h1>Edit Profile of {{ user.username }} </h1>
-        </div>
-        
-            
-        
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <form action="." method="POST" enctype="multipart/form-data">
-                {% include 'socialnews/render_form.html' with form=user_form %}
-                {% include 'socialnews/render_form.html' with form=profile_form %}
-                <button type="submit" class="btn btn-primary mt-2">Edit</button>
-            </form>
+<div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+            <div class="card-body">
+                <h5 class="card-title text-center">Edit Profile of {{ user.username }}</h5>
+                <form action="." method="POST" enctype="multipart/form-data">
+                    {% include 'socialnews/render_form.html' with form=user_form %}
+                    {% include 'socialnews/render_form.html' with form=profile_form %}
+                    <button type="submit" class="btn btn-primary mt-2">Edit</button>
+                </form>
+            </div>
         </div>
     </div>
-
+</div>
 {% endblock %}

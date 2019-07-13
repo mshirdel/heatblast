@@ -1,53 +1,63 @@
 {% extends "socialnews/base.html" %}
 {% block title %} Log in to HeatBlast - Social News {% endblock %}
 {% block content %}
-<div class="row justify-content-md-center">
-    <div class="col-md-12">
-        {% if form.errors %}
-        <p class="alert alert-danger" role="alert">کلمه عبور یا نام کاربری اشتباه است. دوباره سعی کنید.</p>
-        {% endif %}
-        {% if next %}
-        {% if user.is_authenticated %}
-        <p class="alert alert-danger" role="alert">Your account doesn't have access to this page. To proceed, please
-            login with
-            an account that has access.</p>
-        {% else %}
-        <p class="alert alert-danger" role="alert">Please login to see this page.</p>
-        {% endif %}
-        {% endif %}
-        <div class="row">
-            <div class="col-md-12">
-                <form class="form-signin" method="POST" action="{% url 'socialnews:login' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="next" value="{{ next }}">
-                    <div class="from-group">
-                        <label for="id_username">نام کاربری:</label>
-                        <input type="text" name="username" autofocus required id="id_username" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="id_password">کلمه عبور:</label>
-                        <input type="password" name="password" required id="id_password" class="form-control">
-                    </div>
-                    <div class="row">
-
-                        <button class="btn btn-success" type="submit">ورود</button>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <a href="{% url 'socialnews:password_reset' %}">Forgotten your password?</a>
+{% include 'socialnews/render_form_errors.html' %}
+{% if next %}
+    <div class="row margin-top-20">
+        <div class="col-md-12">
+            {% if user.is_authenticated %}
+                <p class="alert alert-danger" role="alert">Your account doesn't have access to this page. To proceed, please login with
+                an account that has access.</p>
+            {% else %}
+                <p class="alert alert-danger" role="alert">Please login to see this page.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Sign In</h5>
+                    <form class="form-signin" method="POST" action="{% url 'socialnews:login' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ next }}">
+                        
+                        <div class="form-label-group">
+                            <input type="text" name="username" autofocus required placeholder="Email address"
+                                id="id_username" class="form-control">
+                            <label for="inputEmail">Email address</label>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <a href="{% url 'socialnews:register_user' %}">Do you wnat to register?</a>
+
+                        <div class="form-label-group">
+                            <input type="password" name="password" id="id_password" class="form-control"
+                                placeholder="Password"
+                                required>
+                            <label for="inputPassword">Password</label>
                         </div>
-                    </div>
-                </form>
+
+                        <div class="custom-control custom-checkbox mb-3">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1">Remember password</label>
+                        </div>
+                        <button class="btn btn-lg btn-success btn-block text-uppercase" type="submit">Sign
+                            in</button>
+                        <a href="{% url 'socialnews:password_reset' %}"
+                            class="btn btn-lg btn-primary btn-block text-uppercase">
+                        Forgotten your password?
+                        </a>
+                        <a href="{% url 'socialnews:register_user' %}"
+                            class="btn btn-lg btn-primary btn-block text-uppercase">
+                            Register
+                        </a>
+                        <!-- <hr class="my-4">
+                        <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i
+                                class="fab fa-google mr-2"></i> Sign in with Google</button>
+                        <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i
+                                class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button> -->
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-
 {% endblock %}
