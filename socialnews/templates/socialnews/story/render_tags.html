@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
         {% for tag in story.tags.all %}
-            <a href="{% url 'socialnews:story_list_by_tag' tag.slug %}" class="badge badge-primary">
+            <a href="{% url 'socialnews:story_list_by_tag' tag.slug %}" class="badge badge-pill badge-light">
                 {{ tag.name }}
             </a>
         {% endfor %}

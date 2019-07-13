@@ -15,12 +15,13 @@
     
 </head>
 
-<body class='body-bg'>
+<body>
     {% include "socialnews/navigation.html" %}
     {% include "socialnews/messages.html"%}
     <main id="main-content" role="main" class="container rtl">
         {% block content %} {% endblock %}
     </main>
+    <br>
     {% include "socialnews/footer.html" %}
     
     {% render_bundle 'main' 'js' %}
