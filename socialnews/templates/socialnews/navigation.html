@@ -1,3 +1,4 @@
+{% load i18n %}
 <!-- Navigation -->
 <nav class="navbar navbar-expand-md">
     <div class="container">
@@ -5,7 +6,7 @@
             <span class="custom-color">
                 <i class="fas fa-stroopwafel"></i>
             </span>
-            HeatBlast - Social News
+            {% trans 'HeatBlast - Social News' %}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,21 +20,21 @@
                         <a class="nav-link" href="{% url 'socialnews:profile'%}">{{ user.username }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'socialnews:new_story' %}">لینک جدید</a>
+                        <a class="nav-link" href="{% url 'socialnews:new_story' %}">{% trans 'New Link' %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'socialnews:logout' %}">خروج</a>
+                        <a class="nav-link" href="{% url 'socialnews:logout' %}">{% trans 'Log out' %}</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'socialnews:login' %}">ورود</a>
+                        <a class="nav-link" href="{% url 'socialnews:login' %}">{% trans 'Login' %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'socialnews:register_user' %}">ثبت نام</a>
+                        <a class="nav-link" href="{% url 'socialnews:register_user' %}">{% trans 'Register' %}</a>
                     </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'socialnews:latest_stories' %}">تازه‌ها</a>
+                    <a class="nav-link" href="{% url 'socialnews:latest_stories' %}">{% trans 'Newest Stories' %}</a>
                 </li>
                 <li class="nav-item">
                     {% include 'socialnews/search.html'%}

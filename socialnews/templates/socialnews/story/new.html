@@ -1,10 +1,11 @@
 {% extends 'socialnews/base.html' %}
+{% load i18n %}
 {% block content %}
     <div class="row body-panel margin-top-15">
         <div class="col-md-12">
             <form action="{% url 'socialnews:new_story' %}" method="POST">
                 {% include 'socialnews/item_form.html' with form=form %}
-                <button type="submit" class="btn btn-primary mt-2">انتشار</button>
+                <button type="submit" class="btn btn-primary mt-2">{% trans 'Publish' %}</button>
             </form>
         </div>
     </div>

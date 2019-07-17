@@ -1,8 +1,9 @@
 {% extends 'socialnews/base.html'%}
 {% load static %}
+{% load i18n %}
 {% load jformat %}
 {% load socialnews_tags %}
-{% block title%} اشتراک گذاری لینک {% endblock %}
+{% block title%} {% trans "Heatblast - Social News" %} {% endblock %}
 {% block content %}
 <div class="body-panel margin-top-15">
     {% for story in stories %}
@@ -25,9 +26,9 @@
                     {% endif %}
 
                     {% if story.url %}
-                        <a href="{{story.url}}" target="_blank">{{story.title}}</a>
+                        <a href="{{story.url}}" class="story-link" target="_blank">{{story.title}}</a>
                     {% else %}
-                        <a href="{{ story.get_absolute_url }}">{{story.title}}</a>
+                        <a href="{{ story.get_absolute_url }}" class="story-link">{{story.title}}</a>
                     {% endif %}
                 </div>
             </div>
@@ -42,16 +43,18 @@
             </div>
             <div class="row font-size-12">
                 <div class="col-md-12">
-                    امتیاز : {{ story.number_of_votes }}
-                    | ایجاد شده توسط:
-                    {{ story.user.username }}
-                    در {{ story.created|jformat:"%H:%M %Y/%m/%d" }}
+                    {% blocktrans with nov=story.number_of_votes username=story.user.username story_created=story.created|jformat:"%Y/%m/%d %H:%M" %}
+                    points : {{ nov }}
+                    | created by:
+                    {{ username }}
+                    on {{ story_created }}
+                    {% endblocktrans %}
                     {% if user.is_authenticated and story.user == user %}
-                        | <a href="{% url 'socialnews:edit_story' story.id %}">ویرایش</a>
+                        | <a href="{% url 'socialnews:edit_story' story.id %}">{% trans "Edit" %}</a>
                     {% endif %} 
                     
-                    | <a href="{{ story.get_absolute_url }}">گفتگو
-                        [{{ story.number_of_comments }}]
+                    | <a href="{{ story.get_absolute_url }}">{% trans "Comments" %}
+                        {{ story.number_of_comments }}
                     </a>
                 </div>
             </div>

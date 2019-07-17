@@ -14,6 +14,7 @@ from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.db.models import Count
+from django.utils.translation import gettext as _
 
 from taggit.models import Tag
 
@@ -87,7 +88,8 @@ class ShowStory(View):
             form = StoryCommentForm()
             messages.add_message(request,
                                  messages.WARNING,
-                                 "برای ثبت دیدگاه باید دارای حساب کاربری باشید.")
+                                 _('Please Register to site for commenting')
+                                 )
             return render(request, 'socialnews/story/show.html',
                           {'story': story, 'form': form})
 

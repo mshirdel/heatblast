@@ -178,6 +178,14 @@ a:hover {
     text-decoration: underline;
 }
 
+.story-link {
+    color: #343a40;
+}
+
+.story-link:hover {
+    color: #343a40;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #17a2b8;

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
 
 from django_jalali.db import models as jmodels
 from taggit.managers import TaggableManager
@@ -27,9 +28,9 @@ class Story(TimeStampedModel):
     objects = models.Manager()
     stories = StoryManager()
 
-    title = models.CharField(max_length=500)
-    url = models.URLField(max_length=2000, blank=True, null=True)
-    story_body_text = models.TextField(blank=True, null=True)
+    title = models.CharField(_('title'),max_length=500)
+    url = models.URLField(_('url'), max_length=2000, blank=True, null=True)
+    story_body_text = models.TextField(_('sotry body text (use markdown)'), blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='stories')
     deleted = models.BooleanField(default=False)
     number_of_comments = models.IntegerField(default=0)

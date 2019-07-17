@@ -1,6 +1,7 @@
 {% extends 'socialnews/base.html' %}
 {% load thumbnail %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 
 <div class="body-panel margin-top-15">
@@ -19,15 +20,15 @@
     <div class="d-flex justify-content-center mb-3">
         <div class="row">
             <div class="col-md-12">
-                Username: <span>{{ user.username }}</span>
+                {% trans 'Username:' %} <span>{{ user.username }}</span>
             </div>
         </div>
     </div>
     <div class="d-flex justify-content-center mb-3">
-        <div class="p-2"><a href="{% url 'socialnews:password_change' %}">Change password</a></div>
-        <div class="p-2"><a href="{% url 'socialnews:profile_edit' %}">Edit Profile</a></div>
-        <div class="p-2"><a href="#">Manage Roles</a></div>
-        <div class="p-2"><a href="#">Manage Tags</a></div>
+        <div class="p-2"><a href="{% url 'socialnews:password_change' %}">{% trans 'Change password' %}</a></div>
+        <div class="p-2"><a href="{% url 'socialnews:profile_edit' %}">{% trans 'Edit Profile' %}</a></div>
+        <div class="p-2"><a href="#">{% trans 'Manage Roles' %}</a></div>
+        <div class="p-2"><a href="#">{% trans 'Manage Tags' %}</a></div>
     </div>
     
 </div>

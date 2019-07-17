@@ -1,5 +1,6 @@
 {% extends 'socialnews/base.html'%}
 {% load jformat %}
+{% load i18n %}
 {% load socialnews_filters %}
 {% block content %}
 <div class="body-panel margin-top-15">
@@ -18,9 +19,11 @@
         </div>
         <div class="row font-size-10">
             <div class="col-md-12">
-                ایجاد شده توسط:
+                {% blocktrans %}
+                Created by:
                 {{ story.user.username }}
-                در {{ story.created|jformat:"%H:%M %Y/%m/%d"}}
+                on {{ story.created|jformat:"%H:%M %Y/%m/%d"}}
+                {% endblocktrans %}
             </div>
         </div>
         {% include 'socialnews/story/render_tags.html' %}
@@ -34,7 +37,7 @@
                 <form action="" method="POST">
                     {% csrf_token %}
                     {{ form }}
-                    <button type="submit" class="btn btn-primary mt-2">ارسال</button>
+                    <button type="submit" class="btn btn-primary mt-2">{% trans "Send" %}</button>
                 </form>
             </div>
         </div>
@@ -51,7 +54,7 @@
 <hr>
 <div class="row">
     <div class="col-md-12">
-        similar stories: <br>
+        {% trans "similar stories:" %} <br>
         <ul>
         {% for story in similar_stories %}
             <li>

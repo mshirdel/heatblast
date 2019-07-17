@@ -1,8 +1,14 @@
 {% load render_bundle from webpack_loader %}
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="fa" class="rtl">
-
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+{% if LANGUAGE_BIDI %}
+    <html lang="fa" class="rtl">
+{% else %}
+    <html lang="{{ LANGUAGE_CODE }}">
+{% endif %}
 <head>
 
     <meta charset="utf-8">
@@ -18,7 +24,7 @@
 <body>
     {% include "socialnews/navigation.html" %}
     {% include "socialnews/messages.html"%}
-    <main id="main-content" role="main" class="container rtl">
+    <main id="main-content" role="main" class="container {% if LANGUAGE_BIDI %} rtl {% endif %}">
         {% block content %} {% endblock %}
     </main>
     <br>

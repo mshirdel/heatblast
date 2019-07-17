@@ -1,8 +1,9 @@
+{% load i18n %}
 <div class="row">
     <div class="col-md-12">
         <form action="{% url 'socialnews:story_search' %}" method="GET">
             <input type="text" name="q" required="" id="id_q">
-            <input type="submit" value="search" class="btn btn-info">
+            <input type="submit" value="{% trans 'search' %}" class="btn btn-info">
         </form>
     </div>
 </div>

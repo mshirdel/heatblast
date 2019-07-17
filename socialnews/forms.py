@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django_jalali import forms as jforms
+from django.utils.translation import gettext_lazy as _
 
 from .models import Profile, Story, StoryComment
 
@@ -14,12 +15,6 @@ class StoryForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'story_body_text': forms.Textarea(attrs={'class': 'form-control'})
         }
-        labels = {
-            'url': 'آدرس لینک',
-            'title': 'عنوان',
-            'story_body_text': 'Story body (Use Markdown)',
-            'tags': 'تگ'
-        }
 
 
 class StoryCommentForm(forms.ModelForm):
@@ -28,9 +23,6 @@ class StoryCommentForm(forms.ModelForm):
         fields = ['story_comment']
         widgets = {
             'story_comment': forms.Textarea(attrs={'class': 'form-control'})
-        }
-        labels = {
-            'story_comment': 'دیدگاه شما چیست'
         }
 
 
