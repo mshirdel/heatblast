@@ -1,0 +1,46 @@
+{% load render_bundle from webpack_loader %}
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+
+<!DOCTYPE html>
+{% if LANGUAGE_BIDI %}
+    <html lang="fa" class="rtl">
+{% else %}
+    <html lang="{{ LANGUAGE_CODE }}">
+{% endif %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>403 Error</title>
+    {% render_bundle 'main' 'css' %}
+</head>
+<body>
+    <div class="container {% if LANGUAGE_BIDI %} rtl {% endif %}">
+        <div class="row d-flex justify-content-center mb-3">
+            <div class="col-md-12">
+                <span class="d-flex justify-content-center margin-top-50 font-size-large alert alert-danger">
+                    <b>{% trans "403 Error" %}</b>
+                </span>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center mb-3">
+            <div class="col-md-6">
+                <img src="{% static 'socialnews/img/robot.png' %}" class="mx-auto d-block">
+            </div>
+            <div class="col-md-6">
+                <h1 class="margin-top-20">{% trans "You have not permission to visit this page" %}</h1>
+                <ul>
+                    <li>{% trans "Lack of enough score to create new stories" %}</li>
+                    <li>{% trans "wait..." %}</li>
+                    <li>{% trans "wait..." %}</li>
+                    <li>{% trans "wait..." %}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

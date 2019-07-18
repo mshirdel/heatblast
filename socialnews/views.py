@@ -1,26 +1,25 @@
 import requests
 from bs4 import BeautifulSoup
-
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.views import View
-from django.views.generic import ListView
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
-from django.utils.translation import gettext as _
 from django.conf import settings
-from django.utils.decorators import method_decorator
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.models import Permission, User
+from django.contrib.postgres.search import (SearchQuery, SearchRank,
+                                            SearchVector)
 from django.core.mail import send_mail
 from django.db.models import Count
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import get_object_or_404, render
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
-
+from django.views import View
+from django.views.generic import ListView
 from taggit.models import Tag
 
-from .models import Story, StoryComment, StoryPoint, Profile
-from .forms import (StoryForm, StoryCommentForm, RegisterUserForm, SearchForm,
-                    EditUserForm, EditProfileForm)
+from .forms import (EditProfileForm, EditUserForm, RegisterUserForm,
+                    SearchForm, StoryCommentForm, StoryForm)
+from .models import Profile, Story, StoryComment, StoryPoint
 
 
 class StoryListView(ListView):
@@ -96,7 +95,9 @@ class ShowStory(View):
 
 
 @method_decorator(login_required, name='dispatch')
-class NewStory(View):
+class NewStory(PermissionRequiredMixin, View):
+    permission_required = 'socialnews.add_story'
+
     def get(self, request):
         form = StoryForm()
         return render(request, 'socialnews/story/new.html', {'form': form})
