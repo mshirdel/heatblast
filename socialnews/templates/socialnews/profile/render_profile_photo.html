@@ -1,0 +1,10 @@
+{% load thumbnail %}
+{% load static %}
+{% if user.profile.photo %}
+    {% thumbnail user.profile.photo size crop="center" as im %}
+        <img src="{{ im.url }}" alt="{{ user.username }}">
+    {% endthumbnail %}
+{% else %}
+    <img src="{% static 'socialnews/img/profile.jpg' %}" alt="{{ user.username }}"
+        class="profile-img-{{ size }}">
+{% endif %}

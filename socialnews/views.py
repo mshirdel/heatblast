@@ -80,7 +80,8 @@ class ShowStory(View):
                 comment.commenter = request.user
                 comment.story = story
                 comment.save()
-                return HttpResponseRedirect('/')
+                return render(request, 'socialnews/story/show.html',
+                              {'story': story, 'form': StoryCommentForm})
             else:
                 return render(request, 'socialnews/story/show.html',
                               {'story': story, 'form': form})

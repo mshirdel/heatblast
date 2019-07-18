@@ -59,6 +59,10 @@ h1 {
     color: white;
 }
 
+.padding-top-3 {
+    padding-top: 3px;
+}
+
 .padding-top-5 {
     padding-top: 5px;
 }
@@ -119,6 +123,10 @@ h1 {
     margin-top: 50px;
 }
 
+.margin-right-10 {
+    margin-right: 10px;
+}
+
 ul.message-alert li {
     display: inline;
 }
@@ -132,7 +140,7 @@ ul.message-alert li {
     color: red;
 }
 
-.form-errors > li {
+.form-errors>li {
     list-style: none;
 }
 
@@ -161,20 +169,29 @@ ul.message-alert li {
 }
 
 .default-profile-img {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
+}
+
+.profile-img-48x48 {
+    width: 48px;
+    height: 48px;
+}
+
+.color-dimgray {
+    color: dimgray;
 }
 
 /* Customizing themes */
 /* ############################################################### */
 a {
-    color: #17a2b8;
+    color: #007bff;
     text-decoration: none;
     background-color: transparent;
 }
 
 a:hover {
-    color: #17a2b8;
+    color: #007bff;
     text-decoration: underline;
 }
 
@@ -193,7 +210,7 @@ a:hover {
 }
 
 .custom-color {
-    color: #17a2b8;
+    color: #007bff;
 }
 
 .page-item.active .page-link {
@@ -214,4 +231,5 @@ a:hover {
 .page-link {
     color: #17a2b8;
 }
+
 /* ############################################################### */

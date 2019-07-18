@@ -13,7 +13,7 @@
                 <div class="col-md-12">
                     {% if story.id in voted_story_id %}
                         <a id="downvote" href="{% url 'socialnews:downvote_story' story.id %}">
-                            <span style="color: tomato">
+                            <span class="custom-color">
                                 <i class="fas fa-heart"></i>
                             </span>
                         </a>
@@ -35,24 +35,24 @@
             <div class="row">
                 <div class="col-md-12">
                     {% if story.url %}
-                        <a href="{% url 'socialnews:stories_by_domain' %}?url={{ story.url_domain_name }}">
+                        <a href="{% url 'socialnews:stories_by_domain' %}?url={{ story.url_domain_name }}"
+                            class="story-link">
                             {{ story.url_domain_name }}
                         </a>
                     {% endif %}
                 </div>
             </div>
             <div class="row font-size-12">
-                <div class="col-md-12">
-                    {% blocktrans with nov=story.number_of_votes username=story.user.username story_created=story.created|jformat:"%Y/%m/%d %H:%M" %}
-                    points : {{ nov }}
-                    | created by:
-                    {{ username }}
-                    on {{ story_created }}
+                <div class="col-md-12 color-dimgray">
+                    {% blocktrans with nov=story.number_of_votes username=story.user.username story_created=story.created.togregorian|timesince %}
+                        points : {{ nov }}
+                        | created by:
+                        {{ username }}
+                        on {{ story_created }}
                     {% endblocktrans %}
                     {% if user.is_authenticated and story.user == user %}
                         | <a href="{% url 'socialnews:edit_story' story.id %}">{% trans "Edit" %}</a>
-                    {% endif %} 
-                    
+                    {% endif %}
                     | <a href="{{ story.get_absolute_url }}">{% trans "Comments" %}
                         {{ story.number_of_comments }}
                     </a>

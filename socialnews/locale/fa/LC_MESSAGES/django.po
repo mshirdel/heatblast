@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-17 16:50+0430\n"
+"POT-Creation-Date: 2019-07-17 22:46+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,58 +18,58 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: models.py:31
+#: socialnews/models.py:31
 msgid "title"
 msgstr "تیتر"
 
-#: models.py:32
+#: socialnews/models.py:32
 msgid "url"
 msgstr "آدرس اینترنتی  - url"
 
-#: models.py:33
+#: socialnews/models.py:33
 msgid "sotry body text (use markdown)"
 msgstr "متن داستان شما می‌توانید از Markdown استفاده کنید"
 
-#: templates/registration/password_change_done.html:3
+#: socialnews/templates/registration/password_change_done.html:3
 msgid "password change done"
 msgstr "اتمام تغییر گذرواژه"
 
-#: templates/registration/password_change_done.html:10
+#: socialnews/templates/registration/password_change_done.html:10
 msgid "Password changed"
 msgstr "تغییر گذرواژه"
 
-#: templates/registration/password_change_done.html:11
+#: socialnews/templates/registration/password_change_done.html:11
 msgid "Your password has been successfully changed."
 msgstr "گذرواژه شما با موفقیت تغییر کرد"
 
-#: templates/registration/password_change_form.html:3
-#: templates/socialnews/profile/profile.html:28
+#: socialnews/templates/registration/password_change_form.html:3
+#: socialnews/templates/socialnews/profile/profile.html:28
 msgid "Change password"
 msgstr "تغییر گذرواژه"
 
-#: templates/registration/password_change_form.html:10
+#: socialnews/templates/registration/password_change_form.html:10
 #, fuzzy
 #| msgid "Change password"
 msgid "Change your password"
 msgstr "تغییر گذرواژه"
 
-#: templates/registration/password_change_form.html:11
+#: socialnews/templates/registration/password_change_form.html:11
 msgid "Use the form below to change your password"
 msgstr "از فرم زیر برای تغییر گذرواژه استفاده کنید"
 
-#: templates/registration/password_change_form.html:14
+#: socialnews/templates/registration/password_change_form.html:14
 msgid "Change"
 msgstr "تغییر"
 
-#: templates/registration/password_reset_complete.html:3
+#: socialnews/templates/registration/password_reset_complete.html:3
 msgid "Password reset"
 msgstr "بازنشاندن گذرواژه"
 
-#: templates/registration/password_reset_complete.html:9
+#: socialnews/templates/registration/password_reset_complete.html:9
 msgid "Password set"
 msgstr ""
 
-#: templates/registration/password_reset_complete.html:11
+#: socialnews/templates/registration/password_reset_complete.html:11
 #, python-format
 msgid ""
 "\n"
@@ -84,31 +84,31 @@ msgstr ""
 "                </p>\n"
 "                "
 
-#: templates/registration/password_reset_confirm.html:3
-#: templates/registration/password_reset_confirm.html:9
-#: templates/registration/password_reset_done.html:3
-#: templates/registration/password_reset_done.html:9
-#: templates/registration/password_reset_form.html:3
+#: socialnews/templates/registration/password_reset_confirm.html:3
+#: socialnews/templates/registration/password_reset_confirm.html:9
+#: socialnews/templates/registration/password_reset_done.html:3
+#: socialnews/templates/registration/password_reset_done.html:9
+#: socialnews/templates/registration/password_reset_form.html:3
 #, fuzzy
 #| msgid "Change password"
 msgid "Reset your password"
 msgstr "تغییر گذرواژه"
 
-#: templates/registration/password_reset_confirm.html:11
+#: socialnews/templates/registration/password_reset_confirm.html:11
 msgid "Please enter your new password twice:"
 msgstr "گذرواژه جدید را دوبار وارد کنید"
 
-#: templates/registration/password_reset_confirm.html:14
+#: socialnews/templates/registration/password_reset_confirm.html:14
 #, fuzzy
 #| msgid "Change password"
 msgid "Change my password"
 msgstr "تغییر گذرواژه"
 
-#: templates/registration/password_reset_done.html:10
+#: socialnews/templates/registration/password_reset_done.html:10
 msgid "We've emaild you instructions for setting your password."
 msgstr "برای تنظیم گذرواژه جدید ایمیلی برای شما فرستاده شده است."
 
-#: templates/registration/password_reset_done.html:11
+#: socialnews/templates/registration/password_reset_done.html:11
 msgid ""
 "If you don't recieve an email, please make sure you've entered the address "
 "you registered with."
@@ -116,7 +116,7 @@ msgstr ""
 "در صورتیکه ایمیلی دریافت نکرده باشید لطفا از صحت ایمیل وارد شده اطمینان حاصل "
 "کنید."
 
-#: templates/registration/password_reset_email.html:2
+#: socialnews/templates/registration/password_reset_email.html:2
 #, python-format
 msgid ""
 "\n"
@@ -124,139 +124,151 @@ msgid ""
 "below:\n"
 msgstr ""
 
-#: templates/registration/password_reset_email.html:6
+#: socialnews/templates/registration/password_reset_email.html:6
 msgid "Your username, is case you've forgotten:"
 msgstr ""
 
-#: templates/registration/password_reset_form.html:9
+#: socialnews/templates/registration/password_reset_form.html:9
 #, fuzzy
 #| msgid "Change password"
 msgid "Reset Password"
 msgstr "تغییر گذرواژه"
 
-#: templates/registration/password_reset_form.html:10
+#: socialnews/templates/registration/password_reset_form.html:10
 #, fuzzy
 #| msgid "Change password"
 msgid "Forgotten your password?"
 msgstr "تغییر گذرواژه"
 
-#: templates/registration/password_reset_form.html:11
+#: socialnews/templates/registration/password_reset_form.html:11
 msgid "Enter your e-mail address to obrain a new password."
 msgstr "ایمیل خود را برای گرفتن گذرواژه جدید وارد کنید"
 
-#: templates/registration/password_reset_form.html:14
+#: socialnews/templates/registration/password_reset_form.html:14
 msgid "Send e-mail"
 msgstr "ارسال ایمیل"
 
-#: templates/socialnews/index.html:6
+#: socialnews/templates/socialnews/index.html:6
 msgid "Heatblast - Social News"
 msgstr ""
 
-#: templates/socialnews/index.html:46
+#: socialnews/templates/socialnews/index.html:47
 #, python-format
 msgid ""
 "\n"
-"                    points : %(nov)s\n"
-"                    | created by:\n"
-"                    %(username)s\n"
-"                    on %(story_created)s\n"
+"                        points : %(nov)s\n"
+"                        | created by:\n"
+"                        %(username)s\n"
+"                        on %(story_created)s\n"
 "                    "
 msgstr ""
 "\n"
-"                    امتیاز : %(nov)s\n"
-"                    | توسط:\n"
-"                    %(username)s\n"
-"                    در %(story_created)s\n"
+"                        امتیاز : %(nov)s\n"
+"                        | توسط:\n"
+"                        %(username)s\n"
+"                        در %(story_created)s پیش\n"
 "                    "
 
-#: templates/socialnews/index.html:53 templates/socialnews/profile/edit.html:13
-#: templates/socialnews/story/edit.html:8
+#: socialnews/templates/socialnews/index.html:54
+#: socialnews/templates/socialnews/profile/edit.html:13
+#: socialnews/templates/socialnews/story/edit.html:8
 msgid "Edit"
 msgstr "ویرایش"
 
-#: templates/socialnews/index.html:56
+#: socialnews/templates/socialnews/index.html:56
 msgid "Comments"
 msgstr "گفتگوها"
 
-#: templates/socialnews/navigation.html:9
+#: socialnews/templates/socialnews/navigation.html:9
 msgid "HeatBlast - Social News"
 msgstr ""
 
-#: templates/socialnews/navigation.html:23
+#: socialnews/templates/socialnews/navigation.html:19
+msgid "Newest Stories"
+msgstr "تازه‌ها"
+
+#: socialnews/templates/socialnews/navigation.html:24
 msgid "New Link"
-msgstr "داستان جدید"
+msgstr "جدید"
 
-#: templates/socialnews/navigation.html:26
-msgid "Log out"
-msgstr "خروج"
-
-#: templates/socialnews/navigation.html:30
+#: socialnews/templates/socialnews/navigation.html:29
 msgid "Login"
 msgstr "ورود"
 
-#: templates/socialnews/navigation.html:33
+#: socialnews/templates/socialnews/navigation.html:32
 msgid "Register"
 msgstr "ثبت نام"
 
-#: templates/socialnews/navigation.html:37
-msgid "Newest Stories"
-msgstr "جدیدترین داستان‌ها"
+#: socialnews/templates/socialnews/navigation.html:45
+msgid "Log out"
+msgstr "خروج"
 
-#: templates/socialnews/profile/edit.html:3
+#: socialnews/templates/socialnews/profile/edit.html:3
 #, fuzzy
 #| msgid "Edit Profile"
 msgid "Edit profile of"
 msgstr "ویرایش پروفایل"
 
-#: templates/socialnews/profile/edit.html:9
+#: socialnews/templates/socialnews/profile/edit.html:9
 #, fuzzy
 #| msgid "Edit Profile"
 msgid "Edit Profile of"
 msgstr "ویرایش پروفایل"
 
-#: templates/socialnews/profile/profile.html:23
+#: socialnews/templates/socialnews/profile/profile.html:23
 msgid "Username:"
 msgstr "نام کاربری:"
 
-#: templates/socialnews/profile/profile.html:29
+#: socialnews/templates/socialnews/profile/profile.html:29
 msgid "Edit Profile"
 msgstr "ویرایش پروفایل"
 
-#: templates/socialnews/profile/profile.html:30
+#: socialnews/templates/socialnews/profile/profile.html:30
 msgid "Manage Roles"
 msgstr "مدیریت نقش‌ها"
 
-#: templates/socialnews/profile/profile.html:31
+#: socialnews/templates/socialnews/profile/profile.html:31
 msgid "Manage Tags"
 msgstr "مدیریت تگ‌ها"
 
-#: templates/socialnews/search.html:6
+#: socialnews/templates/socialnews/search.html:6
 msgid "search"
 msgstr "جستجو"
 
-#: templates/socialnews/story/new.html:8
+#: socialnews/templates/socialnews/story/new.html:8
 msgid "Publish"
 msgstr "انتشار"
 
-#: templates/socialnews/story/show.html:22
+#: socialnews/templates/socialnews/story/show.html:22
 #, python-format
 msgid ""
 "\n"
-"                Created by:\n"
-"                %(story.user.username)s\n"
-"                on %(story.created|jformat:\"%H:%M %Y/%m/%d\")s\n"
-"                "
+"                    Created by: &nbsp;\n"
+"                    <b> %(username)s </b>\n"
+"                    &nbsp;\n"
+"                    <span> %(created)s </span>\n"
+"                    "
 msgstr ""
+"\n"
+"                    ایجاد شده توسط: &nbsp;\n"
+"                    <b> %(username)s </b>\n"
+"                    &nbsp;\n"
+"                    <span> %(created)s </span> پیش \n"
+"                    "
 
-#: templates/socialnews/story/show.html:40
+#: socialnews/templates/socialnews/story/show.html:42
 msgid "Send"
 msgstr "ارسال"
 
-#: templates/socialnews/story/show.html:57
+#: socialnews/templates/socialnews/story/show.html:52
+msgid "before"
+msgstr "پیش"
+
+#: socialnews/templates/socialnews/story/show.html:63
 msgid "similar stories:"
 msgstr "داستان‌های مشابه"
 
-#: views.py:91
+#: socialnews/views.py:92
 msgid "Please Register to site for commenting"
 msgstr "برای ثبت دیدگاه باید دارای حساب کاربری باشید."
 

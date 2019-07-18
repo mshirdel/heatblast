@@ -15,16 +15,15 @@
         
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'socialnews:latest_stories' %}">{% trans 'Newest Stories' %}</a>
+                </li>
                 {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'socialnews:profile'%}">{{ user.username }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'socialnews:new_story' %}">{% trans 'New Link' %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'socialnews:logout' %}">{% trans 'Log out' %}</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        href="{% url 'socialnews:new_story' %}">{% trans 'New Link' %}</a>
+                </li>
+                
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'socialnews:login' %}">{% trans 'Login' %}</a>
@@ -33,12 +32,19 @@
                         <a class="nav-link" href="{% url 'socialnews:register_user' %}">{% trans 'Register' %}</a>
                     </li>
                 {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'socialnews:latest_stories' %}">{% trans 'Newest Stories' %}</a>
-                </li>
+                
                 <li class="nav-item">
                     {% include 'socialnews/search.html'%}
                 </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'socialnews:profile'%}">{{ user.username }}</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'socialnews:logout' %}">{% trans 'Log out' %}</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>
