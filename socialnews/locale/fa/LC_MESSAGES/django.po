@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-17 22:46+0430\n"
+"POT-Creation-Date: 2019-07-24 14:34+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: socialnews/forms.py:30 socialnews/templates/socialnews/login.html:35
+#, fuzzy
+#| msgid "Password reset"
+msgid "Password"
+msgstr "بازنشاندن گذرواژه"
+
+#: socialnews/forms.py:32
+#, fuzzy
+#| msgid "Change password"
+msgid "Reapet password"
+msgstr "تکرار گذرواژه"
 
 #: socialnews/models.py:31
 msgid "title"
@@ -29,6 +41,23 @@ msgstr "آدرس اینترنتی  - url"
 #: socialnews/models.py:33
 msgid "sotry body text (use markdown)"
 msgstr "متن داستان شما می‌توانید از Markdown استفاده کنید"
+
+#: socialnews/templates/403.html:25
+msgid "403 Error"
+msgstr ""
+
+#: socialnews/templates/403.html:34
+msgid "You have not permission to visit this page"
+msgstr ""
+
+#: socialnews/templates/403.html:36
+msgid "Lack of enough score to create new stories"
+msgstr ""
+
+#: socialnews/templates/403.html:37 socialnews/templates/403.html:38
+#: socialnews/templates/403.html:39
+msgid "wait..."
+msgstr ""
 
 #: socialnews/templates/registration/password_change_done.html:3
 msgid "password change done"
@@ -67,14 +96,20 @@ msgstr "بازنشاندن گذرواژه"
 
 #: socialnews/templates/registration/password_reset_complete.html:9
 msgid "Password set"
-msgstr ""
+msgstr "بازنشاندن گذرواژه"
 
 #: socialnews/templates/registration/password_reset_complete.html:11
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                <p>'Your password has been set. You can'\n"
+#| "                    <a href=\"%(url)s\">'log in now'</a>\n"
+#| "                </p>\n"
+#| "                "
 msgid ""
 "\n"
-"                <p>'Your password has been set. You can'\n"
-"                    <a href=\"%(url)s\">'log in now'</a>\n"
+"                <p>Your password has been set. You can\n"
+"                    <a href=\"%(login_url)s\">log in now</a>\n"
 "                </p>\n"
 "                "
 msgstr ""
@@ -126,19 +161,16 @@ msgstr ""
 
 #: socialnews/templates/registration/password_reset_email.html:6
 msgid "Your username, is case you've forgotten:"
-msgstr ""
+msgstr "نام کاربری شما:"
 
 #: socialnews/templates/registration/password_reset_form.html:9
-#, fuzzy
-#| msgid "Change password"
 msgid "Reset Password"
 msgstr "تغییر گذرواژه"
 
 #: socialnews/templates/registration/password_reset_form.html:10
-#, fuzzy
-#| msgid "Change password"
+#: socialnews/templates/socialnews/login.html:50
 msgid "Forgotten your password?"
-msgstr "تغییر گذرواژه"
+msgstr "گذرواژه خود را فراموش کرده‌اید؟"
 
 #: socialnews/templates/registration/password_reset_form.html:11
 msgid "Enter your e-mail address to obrain a new password."
@@ -179,6 +211,40 @@ msgstr "ویرایش"
 msgid "Comments"
 msgstr "گفتگوها"
 
+#: socialnews/templates/socialnews/login.html:3
+msgid "Log in to HeatBlast - Social News"
+msgstr "ورود به سیستم"
+
+#: socialnews/templates/socialnews/login.html:14
+msgid "Please login to see this page."
+msgstr "برای استفاده از این صفحه باید وارد سیستم شوید"
+
+#: socialnews/templates/socialnews/login.html:23
+msgid "Sign In"
+msgstr "ورود به سیستم"
+
+#: socialnews/templates/socialnews/login.html:29
+#, fuzzy
+#| msgid "Username:"
+msgid "Email or Username"
+msgstr "نام کاربری:"
+
+#: socialnews/templates/socialnews/login.html:43
+#, fuzzy
+#| msgid "Change password"
+msgid "Remember password"
+msgstr "تکرار گذرواژه"
+
+#: socialnews/templates/socialnews/login.html:46
+msgid "Sign in"
+msgstr "ورود به سیستم"
+
+#: socialnews/templates/socialnews/login.html:55
+#: socialnews/templates/socialnews/navigation.html:32
+#: socialnews/templates/socialnews/register_user.html:13
+msgid "Register"
+msgstr "ثبت نام"
+
 #: socialnews/templates/socialnews/navigation.html:9
 msgid "HeatBlast - Social News"
 msgstr ""
@@ -194,10 +260,6 @@ msgstr "جدید"
 #: socialnews/templates/socialnews/navigation.html:29
 msgid "Login"
 msgstr "ورود"
-
-#: socialnews/templates/socialnews/navigation.html:32
-msgid "Register"
-msgstr "ثبت نام"
 
 #: socialnews/templates/socialnews/navigation.html:45
 msgid "Log out"
@@ -231,6 +293,16 @@ msgstr "مدیریت نقش‌ها"
 msgid "Manage Tags"
 msgstr "مدیریت تگ‌ها"
 
+#: socialnews/templates/socialnews/register_user.html:3
+#, fuzzy
+#| msgid "Register"
+msgid "Register User"
+msgstr "ثبت نام"
+
+#: socialnews/templates/socialnews/register_user.html:10
+msgid "Sign Up"
+msgstr "ثبت نام"
+
 #: socialnews/templates/socialnews/search.html:6
 msgid "search"
 msgstr "جستجو"
@@ -260,15 +332,15 @@ msgstr ""
 msgid "Send"
 msgstr "ارسال"
 
-#: socialnews/templates/socialnews/story/show.html:52
+#: socialnews/templates/socialnews/story/show.html:55
 msgid "before"
 msgstr "پیش"
 
-#: socialnews/templates/socialnews/story/show.html:63
+#: socialnews/templates/socialnews/story/show.html:66
 msgid "similar stories:"
 msgstr "داستان‌های مشابه"
 
-#: socialnews/views.py:92
+#: socialnews/views.py:91
 msgid "Please Register to site for commenting"
 msgstr "برای ثبت دیدگاه باید دارای حساب کاربری باشید."
 

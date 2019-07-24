@@ -27,9 +27,9 @@ class StoryCommentForm(forms.ModelForm):
 
 
 class RegisterUserForm(forms.ModelForm):
-    password = forms.CharField(label='Password',
+    password = forms.CharField(label=_('Password'),
                                widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    password2 = forms.CharField(label='Reapet password',
+    password2 = forms.CharField(label=_('Reapet password'),
                                 widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
     class Meta:
