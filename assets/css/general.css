@@ -207,17 +207,17 @@ a:hover {
     color: #343a40;
 }
 
-.btn-primary {
+/* .btn-primary {
     color: #fff;
     background-color: #17a2b8;
     border-color: #17a2b8;
-}
+} */
 
 .custom-color {
     color: #007bff;
 }
 
-.page-item.active .page-link {
+/* .page-item.active .page-link {
     z-index: 1;
     color: #fff;
     background-color: #17a2b8;
@@ -234,6 +234,6 @@ a:hover {
 
 .page-link {
     color: #17a2b8;
-}
+} */
 
 /* ############################################################### */

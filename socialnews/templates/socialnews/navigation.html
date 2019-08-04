@@ -3,10 +3,7 @@
 <nav class="navbar navbar-expand-md">
     <div class="container">
         <a class="navbar-brand" href="{% url 'socialnews:index' %}">
-            <span class="custom-color">
-                <i class="fas fa-stroopwafel"></i>
-            </span>
-            {% trans 'HeatBlast - Social News' %}
+            {% trans 'byteland.ir' %}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,18 +30,18 @@
                     </li>
                 {% endif %}
                 
-                <li class="nav-item">
-                    {% include 'socialnews/search.html'%}
-                </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'socialnews:profile'%}">{{ user.username }}</a>
+                    <a class="nav-link" href="{% url 'socialnews:profile'%}">{% trans 'Profile' %}</a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'socialnews:logout' %}">{% trans 'Log out' %}</a>
                 </li>
                 {% endif %}
+                <li class="nav-item">
+                    {% include 'socialnews/search.html'%}
+                </li>
             </ul>
         </div>
     </div>

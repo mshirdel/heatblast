@@ -10,7 +10,7 @@ from .feeds import LatesStoryFeed
 from .views import (EditStory, NewStory, PanelView, ProfileView,
                     RegisterUserView, ShowStory, StoryListView, downvote_stroy,
                     fetch_title, story_search, upvote_story,
-                    ProfileEditView,
+                    ProfileEditView, email_confirmation,
                     Test)
 
 sitemaps = {
@@ -28,7 +28,7 @@ urlpatterns = [
          name='login'),
     path('accounts/logout/', auth_views.LogoutView.as_view(next_page='/'),
          name='logout'),
-    
+
     path('accounts/register/', RegisterUserView.as_view(), name='register_user'),
     path('accounts/password_change', auth_views.PasswordChangeView.as_view(
         success_url='/accounts/password_change_done'), name='password_change'),
@@ -42,6 +42,8 @@ urlpatterns = [
          auth_views.PasswordResetConfirmView.as_view(success_url='/accounts/reset/done'), name='password_reset_confirm'),
     path('accounts/reset/done/', auth_views.PasswordResetCompleteView.as_view(),
          name='password_reset_complete'),
+    path('accounts/email_confirmation/<token>/<code>',
+         email_confirmation, name='email_confitmation'),
 
     ###################
     # PROFILE         #

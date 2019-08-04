@@ -1,4 +1,5 @@
 import requests
+import uuid
 from bs4 import BeautifulSoup
 from django.conf import settings
 from django.contrib import messages
@@ -11,6 +12,7 @@ from django.core.mail import send_mail
 from django.db.models import Count
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
 from django.views import View
@@ -215,11 +217,29 @@ class RegisterUserView(View):
         if form.is_valid():
             new_user = form.save(commit=False)
             new_user.set_password(form.cleaned_data['password'])
+            new_user.is_active = False
             new_user.save()
-            Profile.objects.create(user=new_user)
+            profile = Profile.objects.create(user=new_user)
+            profile.send_activation_code(request)
+            messages.success(request, _('Successfully created your account. for activating it check your email'))
             return HttpResponseRedirect('/')
         else:
             return render(request, 'socialnews/register_user.html', {'form': form})
+
+
+def email_confirmation(request, token, code):
+    user_token = uuid.UUID(token)
+    user = get_object_or_404(User, profile__token=user_token)
+    if user.is_active:
+        messages.info(request, _('Your account already activated'))
+        return HttpResponseRedirect('/')
+    if str(user.profile.activation_code) == code:
+        user.is_active = True
+        user.save()
+        messages.success(request, _("Your account is active. You can login now."))
+        return HttpResponseRedirect('/')
+    return render(request, 'socialnews/profile/activation_email_done.html',
+                  {'activation_status': user.is_active})
 
 
 def fetch_title(request):
