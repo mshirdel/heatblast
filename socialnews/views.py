@@ -98,7 +98,7 @@ class ShowStory(View):
 
 @method_decorator(login_required, name='dispatch')
 class NewStory(PermissionRequiredMixin, View):
-    permission_required = 'socialnews.add_story'
+    permission_required = [] # 'socialnews.add_story'
 
     def get(self, request):
         form = StoryForm()

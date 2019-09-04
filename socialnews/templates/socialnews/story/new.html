@@ -6,6 +6,11 @@
             <form action="{% url 'socialnews:new_story' %}" method="POST">
                 {% include 'socialnews/item_form.html' with form=form %}
                 <button type="submit" class="btn btn-primary mt-2">{% trans 'Publish' %}</button>
+                <div class="row margin-top-50">
+                    <div class="col-md-12">
+                        {% trans 'Leave url blank to submit a question for discussion. If there is no url, the text (if any) will appear at the top of the thread.'%}
+                    </div>
+                </div>
             </form>
         </div>
     </div>
