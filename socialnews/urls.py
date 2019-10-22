@@ -12,6 +12,7 @@ from .views import (EditStory, NewStory, PanelView, ProfileView,
                     fetch_title, story_search, upvote_story,
                     ProfileEditView, email_confirmation,
                     Test)
+from .apiviews import StoryListCreateApiView, LoginApiView, StoryDetailApiView
 
 sitemaps = {
     'stories': StorySitemap
@@ -29,18 +30,27 @@ urlpatterns = [
     path('accounts/logout/', auth_views.LogoutView.as_view(next_page='/'),
          name='logout'),
 
-    path('accounts/register/', RegisterUserView.as_view(), name='register_user'),
+    path('accounts/register/', RegisterUserView.as_view(),
+         name='register_user'),
     path('accounts/password_change', auth_views.PasswordChangeView.as_view(
-        success_url='/accounts/password_change_done'), name='password_change'),
+        success_url='/accounts/password_change_done'),
+        name='password_change'),
     path('accounts/password_change_done/',
-         auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
+         auth_views.PasswordChangeDoneView.as_view(),
+         name='password_change_done'),
     path('accounts/password_reset/',
-         auth_views.PasswordResetView.as_view(success_url='/accounts/password_reset_done'), name='password_reset'),
+         auth_views.PasswordResetView.as_view(
+             success_url='/accounts/password_reset_done'),
+         name='password_reset'),
     path('accounts/password_reset_done/',
-         auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+         auth_views.PasswordResetDoneView.as_view(),
+         name='password_reset_done'),
     path('accounts/reset/<uidb64>/<token>/',
-         auth_views.PasswordResetConfirmView.as_view(success_url='/accounts/reset/done'), name='password_reset_confirm'),
-    path('accounts/reset/done/', auth_views.PasswordResetCompleteView.as_view(),
+         auth_views.PasswordResetConfirmView.as_view(
+             success_url='/accounts/reset/done'),
+         name='password_reset_confirm'),
+    path('accounts/reset/done/',
+         auth_views.PasswordResetCompleteView.as_view(),
          name='password_reset_complete'),
     path('accounts/email_confirmation/<token>/<code>',
          email_confirmation, name='email_confitmation'),
@@ -50,7 +60,8 @@ urlpatterns = [
     ###################
 
     path('accounts/profile/', ProfileView.as_view(), name='profile'),
-    path('accounts/profile/edit/', ProfileEditView.as_view(), name='profile_edit'),
+    path('accounts/profile/edit/', ProfileEditView.as_view(),
+         name='profile_edit'),
 
     ###################
     # STORIES         #
@@ -78,6 +89,14 @@ urlpatterns = [
          name='django.contrib.sitemaps.view.sitemap'),
     path('feed/', LatesStoryFeed(), name='story_feed'),
     path('search/', story_search, name='story_search'),
+
+    ###################
+    # API             #
+    ###################
+    path('api/stories/', StoryListCreateApiView.as_view()),
+    path('api/story/<pk>/', StoryDetailApiView.as_view(), name='story-detail'),
+    path('api/login/', LoginApiView.as_view()),
+    # path('api/users/<pk>')
 ]
 
 if settings.DEBUG:

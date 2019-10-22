@@ -1,9 +1,9 @@
 {% load i18n %}
 <div class="row">
     <div class="col-md-12">
-        <form action="{% url 'socialnews:story_search' %}" method="GET">
-            <input type="text" name="q" required="" id="id_q">
-            <input type="submit" value="{% trans 'search' %}" class="btn btn-outline-info">
+        <form action="{% url 'socialnews:story_search' %}" method="GET" class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" name="q" required="" id="id_q">
+            <input type="submit" value="{% trans 'search' %}" class="btn btn-outline-primary my-2 my-sm-0">
         </form>
     </div>
 </div>

@@ -1,7 +1,7 @@
 {% extends 'socialnews/base.html' %}
 {% load i18n %}
 {% block content %}
-    <div class="row body-panel margin-top-15">
+    <div class="row margin-top-15">
         <div class="col-md-12">
             <form action="{% url 'socialnews:edit_story' id %}" method="POST">
                 {% include 'socialnews/item_form.html' with form=form %}

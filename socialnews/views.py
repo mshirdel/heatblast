@@ -9,6 +9,7 @@ from django.contrib.auth.models import Permission, User
 from django.contrib.postgres.search import (SearchQuery, SearchRank,
                                             SearchVector)
 from django.core.mail import send_mail
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
@@ -98,7 +99,8 @@ class ShowStory(View):
 
 @method_decorator(login_required, name='dispatch')
 class NewStory(PermissionRequiredMixin, View):
-    permission_required = [] # 'socialnews.add_story'
+    # 'socialnews.add_story'
+    permission_required = []
 
     def get(self, request):
         form = StoryForm()
@@ -132,7 +134,8 @@ class EditStory(View):
             for tag_slug in form.cleaned_data['tags']:
                 story.tags.add(tag_slug)
             story.save()
-            # form.save_m2m() # produce error => 'StoryForm' object has no attribute 'save_m2m'
+            # form.save_m2m()
+            # produce error => 'StoryForm' object has no attribute 'save_m2m'
             return HttpResponseRedirect('/')
         else:
             return render(request, 'socialnews/story/edit.html',
@@ -175,7 +178,19 @@ class PanelView(View):
 @method_decorator(login_required, name='dispatch')
 class ProfileView(View):
     def get(self, request):
-        return render(request, 'socialnews/profile/profile.html')
+        user_stories = Story.stories.filter(user=request.user)
+        paginator = Paginator(user_stories, settings.PAGE_SIZE)
+        page = request.GET.get('page')
+        try:
+            stories = paginator.get_page(page)
+        except PageNotAnInteger:
+            stories = paginator.get_page(1)
+        except EmptyPage:
+            stories = paginator(paginator.num_pages)
+
+        return render(request,
+                      'socialnews/profile/profile.html',
+                      {"stories": stories})
 
 
 @method_decorator(login_required, name='dispatch')
@@ -191,8 +206,9 @@ class ProfileEditView(View):
 
     def post(self, request):
         user_form = EditUserForm(instance=request.user, data=request.POST)
-        profile_form = EditProfileForm(
-            instance=request.user.profile, data=request.POST, files=request.FILES)
+        profile_form = EditProfileForm(instance=request.user.profile,
+                                       data=request.POST,
+                                       files=request.FILES)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -221,10 +237,14 @@ class RegisterUserView(View):
             new_user.save()
             profile = Profile.objects.create(user=new_user)
             profile.send_activation_code(request)
-            messages.success(request, _('Successfully created your account. for activating it check your email'))
+            messages.success(request,
+                             _('Successfully created your account. \
+                                for activating it check your email'))
             return HttpResponseRedirect('/')
         else:
-            return render(request, 'socialnews/register_user.html', {'form': form})
+            return render(request,
+                          'socialnews/register_user.html',
+                          {'form': form})
 
 
 def email_confirmation(request, token, code):
@@ -236,7 +256,8 @@ def email_confirmation(request, token, code):
     if str(user.profile.activation_code) == code:
         user.is_active = True
         user.save()
-        messages.success(request, _("Your account is active. You can login now."))
+        messages.success(request, _(
+            "Your account is active. You can login now."))
         return HttpResponseRedirect('/')
     return render(request, 'socialnews/profile/activation_email_done.html',
                   {'activation_status': user.is_active})
@@ -275,7 +296,7 @@ def story_search(request):
 
 class Test(View):
     def get(self, request):
-        return render(request, 'socialnews/test.html')
+        return render(request, 'socialnews/theme.html')
 
     def post(self, request):
         messages.success(request, 'everything is OK')

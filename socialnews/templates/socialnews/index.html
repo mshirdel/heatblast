@@ -5,78 +5,12 @@
 {% load socialnews_tags %}
 {% block title%} {% trans "Heatblast - Social News" %} {% endblock %}
 {% block content %}
-<div class="body-panel margin-top-15">
-    {% for story in stories %}
-    <div class="row ">
-        <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-12">
-                    {% if story.id in voted_story_id %}
-                        <a id="downvote" href="{% url 'socialnews:downvote_story' story.id %}">
-                            <span class="custom-color">
-                                <i class="fas fa-heart"></i>
-                            </span>
-                        </a>
-                    {% else %}
-                        <a href="{% url 'socialnews:upvote_story' story.id %}">
-                            <span>
-                                <i class="far fa-heart"></i>
-                            </span>
-                        </a>
-                    {% endif %}
+    {% include 'socialnews/story/list.html' %}
 
-                    {% if story.url %}
-                        <a href="{{story.url}}" class="story-link" target="_blank">{{story.title}}</a>
-                    {% else %}
-                        <a href="{{ story.get_absolute_url }}" class="story-link">{{story.title}}</a>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {% if story.url %}
-                        <a href="{% url 'socialnews:stories_by_domain' %}?url={{ story.url_domain_name }}"
-                            class="story-link">
-                            {{ story.url_domain_name }}
-                        </a>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="row font-size-12">
-                <div class="col-md-12 color-dimgray">
-                    {% blocktrans with nov=story.number_of_votes username=story.user.username story_created=story.created.togregorian|timesince %}
-                        points : {{ nov }}
-                        | created by:
-                        {{ username }}
-                        on {{ story_created }}
-                    {% endblocktrans %}
-                    {% if user.is_authenticated and story.user == user %}
-                        | <a href="{% url 'socialnews:edit_story' story.id %}">{% trans "Edit" %}</a>
-                    {% endif %}
-                    | <a href="{{ story.get_absolute_url }}">{% trans "Comments" %}
-                        {{ story.number_of_comments }}
-                    </a>
-                </div>
-            </div>
-            {% include 'socialnews/story/render_tags.html' %}
-        </div>
-    </div>
-    <br>
-    {% endfor %}
-    <div class="row justify-content-md-center padding-top-10">
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-12">
-                    {% include 'socialnews/pagination.html' with page=page_obj %}
-                </div>
-            </div>
-        </div>
-    </div>
-    
     {% comment %}
     <p>Latest Posts: </p>
     {% show_latest_stories 5 %}
     {% endcomment %}
-</div>
+
 {% endblock %}
 <!-- - {{ story.created|jformat:"%A %d %B %Y %H:%M"}}-->

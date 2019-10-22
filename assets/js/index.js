@@ -7,18 +7,18 @@ import "bootstrap-v4-rtl/dist/css/bootstrap-rtl.css";
 import "persian-datepicker/dist/css/persian-datepicker.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 // import "@fortawesome/fontawesome-free/webfonts";
-import "../css/fonts.css";
+// import "../css/fonts.css";
 import "../css/general.css";
-import "../css/login.css";
+// import "../css/login.css";
 
-$("document").ready(function() {
+$("document").ready(function () {
   $(".datepicker").pDatepicker({
     initialValueType: "persian",
     initialValue: false,
     format: "YYYY-M-D"
   });
 
-  $("#btnFetchTitle").click(function() {
+  $("#btnFetchTitle").click(function () {
     if ($("#id_url").val()) {
       $.ajax({
         type: "GET",
@@ -27,7 +27,7 @@ $("document").ready(function() {
           url: $("#id_url").val()
         }
       })
-        .done(function(data) {
+        .done(function (data) {
           if (data.title) {
             $("#id_title").val(data.title);
           }
@@ -35,7 +35,7 @@ $("document").ready(function() {
             console.log(data.error);
           }
         })
-        .fail(function(jqXHR, textStatus) {
+        .fail(function (jqXHR, textStatus) {
           console.log(textStatus);
         });
     }

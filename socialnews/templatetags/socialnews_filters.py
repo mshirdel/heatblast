@@ -8,9 +8,12 @@ register = Library()
 
 @register.filter(name='times')
 def times(number):
-    return range(number)
+    if number:
+        return range(number)
 
 
 @register.filter(name='markdown')
 def markdown_formated(text):
-    return mark_safe(markdown.markdown(text))
+    if text:
+        return mark_safe(markdown.markdown(text))
+    return ''

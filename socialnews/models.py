@@ -1,7 +1,12 @@
 import uuid
+from datetime import datetime, timedelta
 
+import jwt
 from django.conf import settings
+# from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
+#                                         PermissionsMixin)
 from django.contrib.auth.models import User
+# from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.db import models
@@ -23,6 +28,28 @@ class TimeStampedModel(models.Model):
         abstract = True
 
 
+class SocialUser(User):
+    class Meta:
+        proxy = True
+
+    @property
+    def token(self):
+        return self._generate_jwt_token()
+
+    def _generate_jwt_token(self):
+        """
+        Generates a JSON Web Token that stores this user's ID and has an expiry
+        date set to 60 days into the future.
+        """
+        dt = datetime.now() + timedelta(days=60)
+        token = jwt.encode({
+            'id': self.pk,
+            'expire': int(dt.strftime('%s'))
+        }, settings.SECRET_KEY, algorithm='HS256')
+
+        return token.decode('utf-8')
+
+
 class StoryManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(deleted=False)
@@ -33,11 +60,15 @@ class Story(TimeStampedModel):
     stories = StoryManager()
 
     title = models.CharField(_('title'), max_length=500)
-    url = models.URLField(_('url'), max_length=2000, blank=True, null=True)
+    story_url = models.URLField(
+        _('url'), max_length=2000, blank=True, null=True)
     story_body_text = models.TextField(
         _('sotry body text (use markdown)'), blank=True, null=True)
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='stories')
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='stories'
+    )
     deleted = models.BooleanField(default=False)
     number_of_comments = models.IntegerField(default=0)
     number_of_votes = models.IntegerField(default=0)
@@ -59,8 +90,8 @@ class Story(TimeStampedModel):
         self.save()
 
     def save(self, *args, **kwargs):
-        if self.url:
-            self.url_domain_name = get_domain(self.url)
+        if self.story_url:
+            self.url_domain_name = get_domain(self.story_url)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -68,7 +99,8 @@ class Story(TimeStampedModel):
 
 
 class StoryComment(TimeStampedModel):
-    commenter = models.ForeignKey(User, on_delete=models.CASCADE)
+    commenter = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     story = models.ForeignKey(
         Story, on_delete=models.CASCADE, related_name='comments')
     story_comment = models.TextField()
@@ -88,7 +120,8 @@ class StoryComment(TimeStampedModel):
 
 
 class StoryPoint(TimeStampedModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
     story = models.ForeignKey(Story, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
@@ -110,8 +143,8 @@ class Profile(models.Model):
     token = models.UUIDField(default=uuid.uuid4)
 
     def send_activation_code(self, request, use_https=False):
-        """ 
-        Send activation code to user's email 
+        """
+        Send activation code to user's email
         """
         current_site = get_current_site(request)
         message = loader.render_to_string(

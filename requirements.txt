@@ -11,6 +11,7 @@ django-extensions==2.1.7
 django-jalali==3.1.0
 django-taggit==1.1.0
 django-webpack-loader==0.6.0
+djangorestframework==3.10.3
 idna==2.8
 ipython==7.2.0
 ipython-genutils==0.2.0
@@ -30,6 +31,7 @@ psycopg2-binary==2.7.5
 ptyprocess==0.6.0
 pycodestyle==2.4.0
 Pygments==2.3.1
+PyJWT==1.7.1
 pylint==2.1.1
 pytz==2018.5
 requests==2.22.0

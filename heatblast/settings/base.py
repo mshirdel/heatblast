@@ -17,7 +17,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.normpath(os.path.join(os.path.dirname(BASE_DIR)))
 
 STATICFILES_DIRS = (
-    # We do this so that django's collectstatic copies or our bundles to the STATIC_ROOT or syncs them to whatever storage we use.
+    # We do this so that django's collectstatic copies or our bundles to
+    # the STATIC_ROOT or syncs them to whatever storage we use.
     os.path.join(PROJECT_ROOT, 'assets'),
 )
 
@@ -48,6 +49,8 @@ INSTALLED_APPS = [
     'taggit',
     'webpack_loader',
     'sorl.thumbnail',
+    'rest_framework',
+    'entry'
 ]
 
 WEBPACK_LOADER = {
@@ -139,3 +142,13 @@ PAGE_SIZE = 20
 SITE_ID = 1
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# AUTH_USER_MODEL = 'socialnews.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'socialnews.backends.JWTAuthentication',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10
+}

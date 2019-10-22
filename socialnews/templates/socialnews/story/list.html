@@ -1,0 +1,60 @@
+{% load i18n %}
+{% for story in stories %}
+    <div class="row margin-top-20">
+        <div class="col-md-12">
+            {% if story.story_url %}
+            <a href="{{story.story_url}}" class="story-link" target="_blank">{{story.title}}</a>
+            {% else %}
+            <a href="{{ story.get_absolute_url }}" class="story-link">{{story.title}}</a>
+            {% endif %}
+            {% if campact %}
+                <a href="{% url 'socialnews:edit_story' story.id %}">{% trans "Edit" %}</a> |
+                <a href="{{ story.get_absolute_url }}">{% trans "Comments" %}
+                    {{ story.number_of_comments }}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    {% if not campact %}
+        <div class="row font-size-12 color-dimgray">
+            <div class="col-md-12">
+                {{ story.number_of_votes }} {% trans "points" %}
+                {% trans "by" %} : {{ story.user.username }}
+                {% trans "in" %} {{ story.created.togregorian|timesince }} {% trans "before" %}
+                {% if user.is_authenticated and story.user == user %}
+                    | <a href="{% url 'socialnews:edit_story' story.id %}">{% trans "Edit" %}</a>
+                {% endif %} |
+                <a href="{{ story.get_absolute_url }}">{% trans "Comments" %}
+                    {{ story.number_of_comments }}
+                </a> |
+                {% if user.is_authenticated %}
+                    {% if story.id in voted_story_id %}
+                        <a id="downvote" href="{% url 'socialnews:downvote_story' story.id %}">
+                            {% trans "Down Vote" %}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'socialnews:upvote_story' story.id %}">
+                            {% trans "Vote" %}
+                        </a>
+                    {% endif %} |
+                {% endif %}
+                {% if story.story_url %}
+                    <a href="{% url 'socialnews:stories_by_domain' %}?url={{ story.url_domain_name }}">
+                        {{ story.url_domain_name }}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        {% include 'socialnews/story/render_tags.html' %}
+    {% endif %}
+{% endfor %}
+
+<div id="divFooter" class="row justify-content-md-center padding-top-10">
+    <div class="col-md-12">
+        {% if page_obj %}
+            {% include 'socialnews/pagination.html' with page=page_obj %}
+        {% else %}
+            {% include 'socialnews/pagination.html' with page=stories %}
+        {% endif %}
+    </div>
+</div>
